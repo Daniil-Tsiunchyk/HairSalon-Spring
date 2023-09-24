@@ -20,7 +20,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Service service;
+    private HairService hairService;
 
     @Column(name = "date_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)

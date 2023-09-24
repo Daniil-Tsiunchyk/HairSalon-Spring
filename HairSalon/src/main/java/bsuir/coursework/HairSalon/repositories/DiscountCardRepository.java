@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DiscountCardRepository extends JpaRepository<DiscountCard, Integer> {
+    DiscountCard findByUser_Id(int userId);
 }
