@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>bsuir.coursework</groupId>
-    <artifactId>HairSalon</artifactId>
+    <artifactId>HairSalon-API</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>HairSalon</name>
     <description>An automated salon management software for seamless appointment scheduling, service management, and
