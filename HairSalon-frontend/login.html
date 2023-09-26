@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Авторизация</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="register.html">Регистрация</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Авторизация</h1>
+        <form id="loginForm">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <button type="submit">Войти</button>
+        </form>
+
+        <div id="loginMessage"></div>
+    </main>
+
+    <footer>
+        Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
+    </footer>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            fetch("http://localhost:8080/api/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        document.getElementById("loginMessage").textContent = "Авторизация успешна.";
+                        window.location.href = "users.html";
+                    } else {
+                        document.getElementById("loginMessage").textContent = "Ошибка авторизации.";
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

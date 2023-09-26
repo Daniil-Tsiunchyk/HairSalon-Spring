@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Регистрация</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="login.html">Авторизация</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Регистрация</h1>
+        <form id="registrationForm">
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required><br>
+
+            <label for="repeatPassword">Повторите пароль:</label>
+            <input type="password" id="repeatPassword" name="repeatPassword" required><br>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+
+        <div id="registrationMessage"></div>
+    </main>
+
+    <footer>
+        Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
+    </footer>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const repeatPassword = document.getElementById("repeatPassword").value;
+
+            if (username.length < 5 || username.length > 13) {
+                document.getElementById("registrationMessage").textContent = "Логин должен содержать от 5 до 12 символов";
+                return;
+            }
+
+            if (password.length < 8 || username.length > 13) {
+                document.getElementById("registrationMessage").textContent = "Пароль должен содержать от 8 до 15 символов";
+                return;
+            }
+
+            if (password != repeatPassword) {
+                document.getElementById("registrationMessage").textContent = "Пароли не совпадают";
+                return;
+            }
+
+            fetch("http://localhost:8080/api/users/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        document.getElementById("registrationMessage").textContent = "Регистрация успешна.";
+                    } else {
+                        document.getElementById("registrationMessage").textContent = "Ошибка регистрации.";
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>
