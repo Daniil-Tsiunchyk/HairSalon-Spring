@@ -52,10 +52,6 @@
         </table>
     </main>
 
-    <footer>
-        Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
-    </footer>
-
     <div id="editUserModal" style="display: none;">
         <h2>Редактировать пользователя</h2>
         <form id="editUserForm">
@@ -82,6 +78,10 @@
         <button id="confirmDeleteUser">Да</button>
         <button id="cancelDeleteUser">Отмена</button>
     </div>
+
+    <footer>
+        Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
+    </footer>
 
     <script>
         function showDeleteUserModal(userId) {
@@ -171,7 +171,7 @@
                 event.preventDefault();
                 const userId = document.getElementById("editUserId").value;
                 const username = document.getElementById("editUserUsername").value;
-                const password = document.getElementById("editUserPassword").value; 
+                const password = document.getElementById("editUserPassword").value;
                 const firstName = document.getElementById("editUserFirstName").value;
                 const lastName = document.getElementById("editUserLastName").value;
 

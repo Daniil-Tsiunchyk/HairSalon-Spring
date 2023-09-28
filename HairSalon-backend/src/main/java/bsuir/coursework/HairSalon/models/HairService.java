@@ -12,7 +12,7 @@ public class HairService {
     @Column(name = "service_id")
     int id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     String name;
 
     @Column(nullable = false)
