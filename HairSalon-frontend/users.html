@@ -56,6 +56,27 @@
         Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
     </footer>
 
+    <div id="editUserModal" style="display: none;">
+        <h2>Редактировать пользователя</h2>
+        <form id="editUserForm">
+            <input type="hidden" id="editUserId" name="userId">
+            <label for="editUserUsername">Имя пользователя:</label>
+            <input type="text" id="editUserUsername" name="username" required><br>
+
+            <label for="editUserPassword">Пароль:</label>
+            <input type="password" id="editUserPassword" name="password" required><br>
+
+            <label for="editUserFirstName">Имя:</label>
+            <input type="text" id="editUserFirstName" name="firstName"><br>
+
+            <label for="editUserLastName">Фамилия:</label>
+            <input type="text" id="editUserLastName" name="lastName"><br>
+
+            <button type="submit">Сохранить</button>
+            <button id="cancelEditUser">Отмена</button>
+        </form>
+    </div>
+
     <div id="deleteUserModal" style="display: none;">
         <p>Вы уверены, что хотите удалить этого пользователя?</p>
         <button id="confirmDeleteUser">Да</button>
@@ -132,8 +153,49 @@
             });
 
         function editUser(userId) {
-            //Добавить модальное окно
+            const modal = document.getElementById("editUserModal");
+            const editForm = document.getElementById("editUserForm");
+            const cancelEditButton = document.getElementById("cancelEditUser");
+
+            fetch(`http://localhost:8080/api/users/${userId}`)
+                .then((response) => response.json())
+                .then((userData) => {
+                    document.getElementById("editUserId").value = userData.id;
+                    document.getElementById("editUserUsername").value = userData.username;
+                    document.getElementById("editUserPassword").value = userData.password;
+                    document.getElementById("editUserFirstName").value = userData.firstName;
+                    document.getElementById("editUserLastName").value = userData.lastName;
+                });
+
+            editForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const userId = document.getElementById("editUserId").value;
+                const username = document.getElementById("editUserUsername").value;
+                const password = document.getElementById("editUserPassword").value; 
+                const firstName = document.getElementById("editUserFirstName").value;
+                const lastName = document.getElementById("editUserLastName").value;
+
+                fetch(`http://localhost:8080/api/users/${userId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username, password, firstName, lastName }),
+                }).then((response) => {
+                    if (response.status === 200) {
+                        modal.style.display = "none";
+                        updateTable();
+                    }
+                });
+            });
+
+            cancelEditButton.onclick = function () {
+                modal.style.display = "none";
+            };
+
+            modal.style.display = "block";
         }
+
 
         function deleteUser(userId) {
             fetch(`http://localhost:8080/api/users/${userId}`, {
