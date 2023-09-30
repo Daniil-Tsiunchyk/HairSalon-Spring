@@ -49,18 +49,22 @@
                         <label for="createUsername">Имя пользователя:</label>
                         <input type="text" class="form-control" id="createUsername" name="username" required>
                     </div>
+
                     <div class="form-group">
                         <label for="createPassword">Пароль:</label>
                         <input type="password" class="form-control" id="createPassword" name="password" required>
                     </div>
+
                     <div class="form-group">
                         <label for="createFirstName">Имя:</label>
                         <input type="text" class="form-control" id="createFirstName" name="firstName">
                     </div>
+
                     <div class="form-group">
                         <label for="createLastName">Фамилия:</label>
                         <input type="text" class="form-control" id="createLastName" name="lastName">
                     </div>
+                    
                     <button type="submit" class="btn btn-primary">Создать</button>
                 </form>
             </div>
@@ -84,6 +88,7 @@
 
     <div id="editUserModal" style="display: none;">
         <h2>Редактировать пользователя</h2>
+        
         <form id="editUserForm">
             <input type="hidden" id="editUserId" name="userId">
             <label for="editUserUsername">Имя пользователя:</label>
@@ -110,7 +115,7 @@
     </div>
 
 
-    <footer class="text-center mt-4">
+    <footer class="text-center mt-4 fixed-bottom">
         Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
     </footer>
 

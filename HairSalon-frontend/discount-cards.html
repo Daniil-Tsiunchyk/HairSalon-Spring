@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление услугами</title>
+    <title>Управление дисконтными картами</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -22,11 +22,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="users.html">Пользователи</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="services.html">Услуги</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="discount-cards.html">Дисконтные карты</a>
+                        <a class="nav-link active" href="discount-cards.html">Дисконтные карты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="bookings.html">Брони</a>
@@ -40,64 +40,61 @@
     </header>
 
     <main class="container mt-4">
-        <h1 class="mb-4">Управление услугами</h1>
+        <h1 class="mb-4">Управление дисконтными картами</h1>
 
         <div class="row">
             <div class="col-md-6">
-                <form id="createServiceForm">
+                <form id="createDiscountCardForm">
                     <div class="form-group">
-                        <label for="createServiceName">Название услуги:</label>
-                        <input type="text" class="form-control" id="createServiceName" name="name" required>
+                        <label for="createDiscountPercentage">Процент скидки:</label>
+                        <input type="number" class="form-control" id="createDiscountPercentage"
+                            name="discountPercentage" required>
                     </div>
-
                     <div class="form-group">
-                        <label for="createServiceCost">Стоимость:</label>
-                        <input type="number" class="form-control" id="createServiceCost" name="cost" required>
+                        <label for="userSelect">Выберите пользователя:</label>
+                        <select class="form-control" id="userSelect" name="userId" required></select>
                     </div>
-
                     <button type="submit" class="btn btn-primary">Создать</button>
                 </form>
             </div>
-
             <div class="col-md-6">
-                <table id="serviceTable" class="table">
+                <table id="discountCardTable" class="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Название услуги</th>
-                            <th>Стоимость</th>
+                            <th>Процент скидки</th>
+                            <th>Пользователь</th>
                             <th>Действия</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
-        </div>
     </main>
 
-    <div id="editServiceModal" style="display: none;">
-        <h2 class="modal-title">Редактировать услугу</h2>
-
-        <form id="editServiceForm">
-            <input type="hidden" id="editServiceId" name="serviceId">
-            <label for="editServiceName">Название услуги:</label>
-            <input type="text" id="editServiceName" name="name" required>
-
-            <label for="editServiceCost">Стоимость:</label>
-            <input type="number" id="editServiceCost" name="cost" required>
-
-
+    <div id="editDiscountCardModal" style="display: none;">
+        <h2>Редактировать дисконтную карту</h2>
+        <form id="editDiscountCardForm">
+            <input type="hidden" id="editDiscountCardId" name="discountCardId">
+            <div class="form-group">
+                <label for="editDiscountPercentage">Процент скидки:</label>
+                <input type="number" class="form-control" id="editDiscountPercentage" name="discountPercentage"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="editUserSelect">Выберите пользователя:</label>
+                <select class="form-control" id="editUserSelect" name="userId" required></select>
+            </div>
             <button type="submit">Сохранить</button>
-            <button id="cancelEditService">Отмена</button>
+            <button id="cancelEditDiscountCard">Отмена</button>
         </form>
     </div>
 
-    <div id="deleteServiceModal" style="display: none;">
-        <p>Вы уверены, что хотите удалить эту услугу?</p>
-        <button id="confirmDeleteService">Да</button>
-        <button id="cancelDeleteService">Отмена</button>
+    <div id="deleteDiscountCardModal" style="display: none;">
+        <p>Вы уверены, что хотите удалить эту дисконтную карту?</p>
+        <button id="confirmDeleteDiscountCard">Да</button>
+        <button id="cancelDeleteDiscountCard">Отмена</button>
     </div>
 
     <footer class="text-center mt-4 fixed-bottom">
@@ -107,7 +104,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="services.js"></script>
+    <script src="discount-cards.js"></script>
 </body>
 
 </html>
