@@ -1,20 +1,3 @@
-function showDeleteUserModal(userId) {
-  const modal = document.getElementById("deleteUserModal");
-  const confirmButton = document.getElementById("confirmDeleteUser");
-  const cancelButton = document.getElementById("cancelDeleteUser");
-
-  confirmButton.onclick = function () {
-    modal.style.display = "none";
-    deleteUser(userId);
-  };
-
-  cancelButton.onclick = function () {
-    modal.style.display = "none";
-  };
-
-  modal.style.display = "block";
-}
-
 function updateTable() {
   fetch("http://localhost:8080/api/users")
     .then((response) => response.json())
@@ -104,6 +87,22 @@ function editUser(userId) {
   });
 
   cancelEditButton.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  modal.style.display = "block";
+}
+function showDeleteUserModal(userId) {
+  const modal = document.getElementById("deleteUserModal");
+  const confirmButton = document.getElementById("confirmDeleteUser");
+  const cancelButton = document.getElementById("cancelDeleteUser");
+
+  confirmButton.onclick = function () {
+    modal.style.display = "none";
+    deleteUser(userId);
+  };
+
+  cancelButton.onclick = function () {
     modal.style.display = "none";
   };
 

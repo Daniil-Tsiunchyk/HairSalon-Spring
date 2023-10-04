@@ -25,8 +25,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="services.html">Услуги</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="discount-cards.html">Дисконтные карты</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="discount-cards.html">Дисконтные карты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="bookings.html">Брони</a>
@@ -73,7 +73,7 @@
         </div>
     </main>
 
-    <div id="editDiscountCardModal" style="display: none;">
+    <div id="editDiscountCardModal" class="container mt-4 mb-4" style="display: none;">
         <h2>Редактировать дисконтную карту</h2>
         <form id="editDiscountCardForm">
             <input type="hidden" id="editDiscountCardId" name="discountCardId">
@@ -86,15 +86,15 @@
                 <label for="editUserSelect">Выберите пользователя:</label>
                 <select class="form-control" id="editUserSelect" name="userId" required></select>
             </div>
-            <button type="submit">Сохранить</button>
-            <button id="cancelEditDiscountCard">Отмена</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button id="cancelEditDiscountCard" class="btn btn-secondary">Отмена</button>
         </form>
     </div>
 
-    <div id="deleteDiscountCardModal" style="display: none;">
+    <div id="deleteDiscountCardModal" class="container mt-4 mb-4" style="display: none;">
         <p>Вы уверены, что хотите удалить эту дисконтную карту?</p>
-        <button id="confirmDeleteDiscountCard">Да</button>
-        <button id="cancelDeleteDiscountCard">Отмена</button>
+        <button id="confirmDeleteDiscountCard" class="btn btn-danger">Да</button>
+        <button id="cancelDeleteDiscountCard" class="btn btn-secondary">Отмена</button>
     </div>
 
     <footer class="text-center mt-4 fixed-bottom">

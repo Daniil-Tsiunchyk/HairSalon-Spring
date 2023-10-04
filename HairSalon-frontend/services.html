@@ -77,27 +77,30 @@
         </div>
     </main>
 
-    <div id="editServiceModal" style="display: none;">
+    <div id="editServiceModal" class="container mt-4 mb-4" style="display: none;">
         <h2 class="modal-title">Редактировать услугу</h2>
 
         <form id="editServiceForm">
             <input type="hidden" id="editServiceId" name="serviceId">
-            <label for="editServiceName">Название услуги:</label>
-            <input type="text" id="editServiceName" name="name" required>
+            <div class="form-group">
+                <label for="editServiceName">Название услуги:</label>
+                <input type="text" class="form-control" id="editServiceName" name="name" required>
+            </div>
 
-            <label for="editServiceCost">Стоимость:</label>
-            <input type="number" id="editServiceCost" name="cost" required>
+            <div class="form-group">
+                <label for="editServiceCost">Стоимость:</label>
+                <input type="number" class="form-control" id="editServiceCost" name="cost" required>
+            </div>
 
-
-            <button type="submit">Сохранить</button>
-            <button id="cancelEditService">Отмена</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button id="cancelEditService" class="btn btn-secondary">Отмена</button>
         </form>
     </div>
 
-    <div id="deleteServiceModal" style="display: none;">
+    <div id="deleteServiceModal" class="container mt-4 mb-4" style="display: none;">
         <p>Вы уверены, что хотите удалить эту услугу?</p>
-        <button id="confirmDeleteService">Да</button>
-        <button id="cancelDeleteService">Отмена</button>
+        <button id="confirmDeleteService" class="btn btn-danger">Да</button>
+        <button id="cancelDeleteService" class="btn btn-secondary">Отмена</button>
     </div>
 
     <footer class="text-center mt-4 fixed-bottom">
