@@ -13,7 +13,7 @@ function updateTable() {
                   <td>${user.firstName}</td>
                   <td>${user.lastName}</td>
                   <td>
-                      <button onclick="editUser(${user.id})">Редактировать</button>
+                      <button onclick="showEditUserModal(${user.id})">Редактировать</button>
                       <button onclick="showDeleteUserModal(${user.id})">Удалить</button>
                   </td>
               `;
@@ -49,7 +49,7 @@ document
     });
   });
 
-function editUser(userId) {
+function showEditUserModal(userId) {
   const modal = document.getElementById("editUserModal");
   const editForm = document.getElementById("editUserForm");
   const cancelEditButton = document.getElementById("cancelEditUser");
@@ -72,18 +72,7 @@ function editUser(userId) {
     const firstName = document.getElementById("editUserFirstName").value;
     const lastName = document.getElementById("editUserLastName").value;
 
-    fetch(`http://localhost:8080/api/users/${userId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password, firstName, lastName }),
-    }).then((response) => {
-      if (response.status === 200) {
-        modal.style.display = "none";
-        updateTable();
-      }
-    });
+    editUser(userId, username, password, firstName, lastName);
   });
 
   cancelEditButton.onclick = function () {
@@ -92,6 +81,23 @@ function editUser(userId) {
 
   modal.style.display = "block";
 }
+
+function editUser(userId, username, password, firstName, lastName) {
+  fetch(`http://localhost:8080/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password, firstName, lastName }),
+  }).then((response) => {
+    if (response.status === 200) {
+      const modal = document.getElementById("editUserModal");
+      modal.style.display = "none";
+      updateTable();
+    }
+  });
+}
+
 function showDeleteUserModal(userId) {
   const modal = document.getElementById("deleteUserModal");
   const confirmButton = document.getElementById("confirmDeleteUser");
