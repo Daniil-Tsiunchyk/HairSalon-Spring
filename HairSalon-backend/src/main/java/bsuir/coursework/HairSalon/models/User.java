@@ -22,6 +22,10 @@ public class User {
     @Schema(description = "Username of the user", example = "john_doe")
     private String username;
 
+    @Column(unique = true)
+    @Schema(description = "Email address of the user", example = "john.doe@example.com")
+    private String email;
+
     @Column(nullable = false)
     @Schema(description = "Password of the user", example = "password123")
     private String password;

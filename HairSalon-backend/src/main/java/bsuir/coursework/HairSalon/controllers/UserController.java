@@ -3,6 +3,9 @@ package bsuir.coursework.HairSalon.controllers;
 import bsuir.coursework.HairSalon.models.User;
 import bsuir.coursework.HairSalon.services.UserService;
 import bsuir.coursework.HairSalon.utils.PasswordHasher;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -178,5 +183,98 @@ public class UserController {
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+
+    @Operation(
+            summary = "Generate and send reset code for Confirmed Email",
+            description = "Generate a reset code and send it to the user's email if the email is confirmed.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Reset code sent successfully"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Error generating reset code"
+                    )
+            }
+    )
+    @PostMapping("/reset-code")
+    public ResponseEntity<Map<String, String>> generateResetCode(
+            @Parameter(description = "User email. The email must be confirmed to generate the reset code.")
+            @RequestParam String email) {
+        String resetCode = userService.generateAndSendResetCode(email);
+        Map<String, String> response = new HashMap<>();
+        if (resetCode != null) {
+            response.put("message", "Reset code sent successfully");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("error", "Error sending reset code");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @Operation(
+            summary = "Check reset code",
+            description = "Check if the provided reset code exists for the user.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Reset code exists"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Reset code does not exist"
+                    )
+            }
+    )
+    @GetMapping("/reset-code/check")
+    public ResponseEntity<Boolean> checkResetCode(
+            @Parameter(description = "User Email") @RequestParam String email,
+            @Parameter(description = "Reset code") @RequestParam String resetCode) {
+        boolean codeExists = userService.checkResetCode(email, resetCode);
+        if (codeExists) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+        }
+    }
+
+    @Operation(
+            summary = "Reset user password",
+            description = "Reset user password using the provided reset code.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Password reset successful"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid reset code"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Reset code not found"
+                    )
+            }
+    )
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(
+            @Parameter(description = "User Email") @RequestParam String email,
+            @Parameter(description = "Reset code") @RequestParam String resetCode,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = User.class),
+                            examples = @ExampleObject(value = "{\"password\": \"new_password\"}")
+                    )
+            ) @RequestBody @Parameter(description = "New password") User user) throws NoSuchAlgorithmException {
+        boolean resetSuccessful = userService.resetPassword(email, resetCode, user.getPassword());
+        if (resetSuccessful) {
+            String jsonResponse = "{\"resetCode\":\"" + resetCode + "\"}";
+            return ResponseEntity.ok(jsonResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid reset code");
+        }
     }
 }
