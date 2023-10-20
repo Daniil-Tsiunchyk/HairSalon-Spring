@@ -5,9 +5,6 @@ import bsuir.coursework.HairSalon.services.HairServiceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +42,7 @@ public class HairServiceController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful retrieval of a hair service",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = HairService.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"name\": \"Haircut\", \"cost\": 25.0}")
-                            )
+                            description = "Successful retrieval of a hair service"
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -71,12 +63,7 @@ public class HairServiceController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Successful creation of a hair service",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = HairService.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"name\": \"New Service\", \"cost\": 30.0}")
-                            )
+                            description = "Successful creation of a hair service"
                     )
             }
     )
@@ -93,12 +80,7 @@ public class HairServiceController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful update of a hair service",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = HairService.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"name\": \"Updated Service\", \"cost\": 35.0}")
-                            )
+                            description = "Successful update of a hair service"
                     ),
                     @ApiResponse(
                             responseCode = "404",

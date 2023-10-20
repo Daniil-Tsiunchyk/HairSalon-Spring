@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import java.util.List;
@@ -44,12 +41,7 @@ public class DiscountCardController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful retrieval of a discount card",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = DiscountCard.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"discountPercentage\": 10.0, \"user\": {...}}")
-                            )
+                            description = "Successful retrieval of a discount card"
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -70,12 +62,7 @@ public class DiscountCardController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Successful creation of a discount card",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = DiscountCard.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"discountPercentage\": 10.0, \"user\": {...}}")
-                            )
+                            description = "Successful creation of a discount card"
                     )
             }
     )
@@ -92,12 +79,7 @@ public class DiscountCardController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful update of a discount card",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = DiscountCard.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"discountPercentage\": 15.0, \"user\": {...}}")
-                            )
+                            description = "Successful update of a discount card"
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -144,12 +126,7 @@ public class DiscountCardController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful retrieval of a discount card",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = DiscountCard.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"discountPercentage\": 10.0, \"user\": {...}}")
-                            )
+                            description = "Successful retrieval of a discount card"
                     ),
                     @ApiResponse(
                             responseCode = "404",

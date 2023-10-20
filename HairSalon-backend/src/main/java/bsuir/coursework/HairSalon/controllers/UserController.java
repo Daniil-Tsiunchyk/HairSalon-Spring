@@ -6,9 +6,6 @@ import bsuir.coursework.HairSalon.utils.PasswordHasher;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +44,7 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful retrieval of a user",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = User.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"username\": \"john_doe\", \"firstName\": \"Daniil\", \"lastName\": \"Makarov\", \"role\": \"USER\", \"bookings\": [1, 2, 3]}")
-                            )
+                            description = "Successful retrieval of a user"
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -73,12 +65,7 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Successful creation of a user",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = User.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"username\": \"john_doe\", \"firstName\": \"Daniil\", \"lastName\": \"Makarov\", \"role\": \"USER\", \"bookings\": []}")
-                            )
+                            description = "Successful creation of a user"
                     )
             }
     )
@@ -95,12 +82,7 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful update of a user",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = User.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"username\": \"john_doe\", \"firstName\": \"UpdatedName\", \"lastName\": \"Makarov\", \"role\": \"USER\", \"bookings\": []}")
-                            )
+                            description = "Successful update of a user"
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -111,7 +93,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable @Parameter(description = "ID of the user") int id,
-            @RequestBody @Parameter(description = "Updated user data") User updatedUser) {
+            @RequestBody @Parameter(description = "Updated user data") User updatedUser) throws NoSuchAlgorithmException {
         User updated = userService.updateUser(id, updatedUser);
         if (updated != null) {
             return ResponseEntity.ok(updated);
@@ -147,12 +129,7 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Successful registration of a user",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = User.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"username\": \"john_doe\", \"firstName\": \"Daniil\", \"lastName\": \"Makarov\", \"role\": \"USER\", \"bookings\": []}")
-                            )
+                            description = "Successful registration of a user"
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -181,12 +158,7 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful login of a user",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = User.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"username\": \"john_doe\", \"firstName\": \"Daniil\", \"lastName\": \"Makarov\", \"role\": \"USER\", \"bookings\": []}")
-                            )
+                            description = "Successful login of a user"
                     ),
                     @ApiResponse(
                             responseCode = "401",

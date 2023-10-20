@@ -9,9 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import java.util.List;
@@ -44,12 +41,7 @@ public class BookingController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful retrieval of a booking",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = Booking.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"user\": {...}, \"hairService\": {...}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}")
-                            )
+                            description = "Successful retrieval of a booking"
                     ),
                     @ApiResponse(
                             responseCode = "404",
@@ -70,12 +62,7 @@ public class BookingController {
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Successful creation of a booking",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = Booking.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"user\": {...}, \"hairService\": {...}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}")
-                            )
+                            description = "Successful creation of a booking"
                     )
             }
     )
@@ -92,12 +79,7 @@ public class BookingController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Successful update of a booking",
-                            content = @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = Booking.class),
-                                    examples = @ExampleObject(value = "{\"id\": 1, \"user\": {...}, \"hairService\": {...}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}")
-                            )
+                            description = "Successful update of a booking"
                     ),
                     @ApiResponse(
                             responseCode = "404",

@@ -5,8 +5,11 @@ import bsuir.coursework.HairSalon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
+
+import static bsuir.coursework.HairSalon.utils.PasswordHasher.hashPassword;
 
 @Service
 public class UserService {
@@ -29,12 +32,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(int id, User updatedUser) {
+    public User updateUser(int id, User updatedUser) throws NoSuchAlgorithmException {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
             User user = existingUser.get();
             user.setUsername(updatedUser.getUsername());
-            user.setPassword(updatedUser.getPassword());
+            user.setPassword(hashPassword(updatedUser.getPassword()));
             user.setFirstName(updatedUser.getFirstName());
             user.setLastName(updatedUser.getLastName());
             user.setRole(updatedUser.getRole());

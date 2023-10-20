@@ -11,12 +11,12 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*"); // Разрешить доступ с любых источников (в будущем можно заменить на доменное имя)
-        corsConfiguration.addAllowedMethod("*"); // Разрешить все HTTP-методы (GET, POST, PUT, DELETE, и др.)
-        corsConfiguration.addAllowedHeader("*"); // Разрешить все заголовки
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedHeader("*");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration); // Применить настройки ко всем URL-ам
+        source.registerCorsConfiguration("/**", corsConfiguration);
 
         return new CorsFilter(source);
     }
