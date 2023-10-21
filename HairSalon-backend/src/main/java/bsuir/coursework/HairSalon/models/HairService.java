@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "services")
@@ -22,4 +24,9 @@ public class HairService {
     @Column(nullable = false)
     @Schema(description = "Cost of the hair service", example = "25.0")
     private Double cost;
+
+    @ElementCollection
+    @CollectionTable(name = "establishment_images", joinColumns = @JoinColumn(name = "establishment_id"))
+    @Column(name = "image_url")
+    private List<String> images;
 }

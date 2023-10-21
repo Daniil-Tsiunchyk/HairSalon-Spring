@@ -2,15 +2,20 @@ package bsuir.coursework.HairSalon.controllers;
 
 import bsuir.coursework.HairSalon.models.HairService;
 import bsuir.coursework.HairSalon.services.HairServiceService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -119,5 +124,61 @@ public class HairServiceController {
             @PathVariable @Parameter(description = "ID of the hair service") int id) {
         hairServiceService.deleteHairService(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "Add an image to the hair service",
+            description = "Endpoint to add an image to the hair service"
+    )
+    @PostMapping(value = "/{id}/addImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<HairService> addImageToHairService(
+            @PathVariable @Parameter(description = "ID of the hair service") Long id,
+            @RequestPart(value = "imageFile") @Parameter(
+                    description = "Image file to upload",
+                    content = @Content(
+                            mediaType = "multipart/form-data",
+                            schema = @Schema(type = "string", format = "binary")
+                    )
+            ) MultipartFile imageFile) {
+        HairService updatedHairService = hairServiceService.addImageToHairService(id, imageFile);
+        return ResponseEntity.ok(updatedHairService);
+    }
+
+    @Operation(
+            summary = "Remove an image from the hair service",
+            description = "Endpoint to remove an image from the hair service"
+    )
+    @DeleteMapping("/{id}/removeImage")
+    public ResponseEntity<HairService> removeImageFromHairService(
+            @PathVariable @Parameter(description = "ID of the hair service") Long id,
+            @RequestParam(name = "imageUrl") String imageUrl) {
+        HairService updatedHairService = hairServiceService.removeImageFromHairService(id, imageUrl);
+        return ResponseEntity.ok(updatedHairService);
+    }
+
+    @Operation(
+            summary = "Get a specific image of an hair service",
+            description = "Endpoint to retrieve a specific image of an hair service by its URL"
+    )
+    @GetMapping("/getImage")
+    public ResponseEntity<byte[]> getImageOfHairService(
+            @RequestParam(name = "imageUrl") String imageUrl) {
+        byte[] imageBytes = hairServiceService.getImageOfHairService(imageUrl);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "Get all images of an hair service",
+            description = "Endpoint to retrieve all images of an hair service"
+    )
+    @GetMapping("/{id}/getAllImages")
+    public ResponseEntity<byte[]> getAllImagesOfHairService(
+            @PathVariable @Parameter(description = "ID of the hair service") Long id) {
+        byte[] allImagesBytes = hairServiceService.getAllImagesOfHairService(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(allImagesBytes, headers, HttpStatus.OK);
     }
 }
