@@ -4,20 +4,20 @@ function updateTable() {
     .then((data) => {
       const tableBody = document.querySelector("#userTable tbody");
       tableBody.innerHTML = "";
-
+        let i = 0;
       data.forEach((user) => {
+        i++;
         const row = document.createElement("tr");
         row.innerHTML = `
-                  <td>${user.id}</td>
+                  <td>${i}</td>
                   <td>${user.username}</td>
                   <td>${user.firstName}</td>
                   <td>${user.lastName}</td>
                   <td>
-                      <button onclick="showEditUserModal(${user.id})">Редактировать</button>
-                      <button onclick="showDeleteUserModal(${user.id})">Удалить</button>
+                      <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editUserModal" data-bs-whatever="@getbootstrap" onclick="showEditUserModal(${user.id})">Редактировать</button>
+                      <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteUserModal" onclick="showDeleteUserModal(${user.id})">Удалить</button>
                   </td>
               `;
-
         tableBody.appendChild(row);
       });
     });
@@ -32,7 +32,7 @@ document
     const firstName = document.getElementById("createFirstName").value;
     const lastName = document.getElementById("createLastName").value;
 
-    fetch("http://localhost:8080/api/users", {
+    fetch("http://localhost:8080/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,21 +51,18 @@ document
 
 function showEditUserModal(userId) {
   const modal = document.getElementById("editUserModal");
-  const editForm = document.getElementById("editUserForm");
-  const cancelEditButton = document.getElementById("cancelEditUser");
 
   fetch(`http://localhost:8080/api/users/${userId}`)
     .then((response) => response.json())
     .then((userData) => {
       document.getElementById("editUserId").value = userData.id;
       document.getElementById("editUserUsername").value = userData.username;
-      document.getElementById("editUserPassword").value = userData.password;
+      document.getElementById("editUserPassword").value = "oleg";
       document.getElementById("editUserFirstName").value = userData.firstName;
       document.getElementById("editUserLastName").value = userData.lastName;
     });
 
-  editForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+    submitEditButton.onclick = function () {
     const userId = document.getElementById("editUserId").value;
     const username = document.getElementById("editUserUsername").value;
     const password = document.getElementById("editUserPassword").value;
@@ -73,11 +70,8 @@ function showEditUserModal(userId) {
     const lastName = document.getElementById("editUserLastName").value;
 
     editUser(userId, username, password, firstName, lastName);
-  });
-
-  cancelEditButton.onclick = function () {
-    modal.style.display = "none";
   };
+
 
   modal.style.display = "block";
 }
@@ -99,20 +93,11 @@ function editUser(userId, username, password, firstName, lastName) {
 }
 
 function showDeleteUserModal(userId) {
-  const modal = document.getElementById("deleteUserModal");
   const confirmButton = document.getElementById("confirmDeleteUser");
-  const cancelButton = document.getElementById("cancelDeleteUser");
 
   confirmButton.onclick = function () {
-    modal.style.display = "none";
     deleteUser(userId);
   };
-
-  cancelButton.onclick = function () {
-    modal.style.display = "none";
-  };
-
-  modal.style.display = "block";
 }
 
 function deleteUser(userId) {

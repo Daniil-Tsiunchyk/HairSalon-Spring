@@ -21,19 +21,19 @@ function updateDiscountCardTable() {
     .then((data) => {
       const tableBody = document.querySelector("#discountCardTable tbody");
       tableBody.innerHTML = "";
-
+        let i = 0;
       data.forEach((discountCard) => {
-        const row = document.createElement("tr");
+          const row = document.createElement("tr");
+        i++;
         row.innerHTML = `
-                      <td>${discountCard.id}</td>
-                      <td>${discountCard.discountPercentage}</td>
-                      <td>${discountCard.user.username}</td>
+                      <td>${i}</td>
+                      <td>${discountCard.discountPercentage}%</td>
+                      <td>${discountCard.clientName}</td>
                       <td>
-                          <button onclick="editDiscountCard(${discountCard.id})">Редактировать</button>
-                          <button onclick="showDeleteDiscountCardModal(${discountCard.id})">Удалить</button>
+                          <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editDiscountCardModal" data-bs-whatever="@getbootstrap" onclick="editDiscountCard(${discountCard.id})">Редактировать</button>
+                          <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteDiscountCardModal" onclick="showDeleteDiscountCardModal(${discountCard.id})">Удалить</button>
                       </td>
                   `;
-
         tableBody.appendChild(row);
       });
     });
@@ -47,22 +47,16 @@ function loadUsersIntoSelects() {
       console.log("Данные о пользователях получены:", data);
 
       const userSelect = document.getElementById("userSelect");
-      const editUserSelect = document.getElementById("editUserSelect");
 
       userSelect.innerHTML = "";
-      editUserSelect.innerHTML = "";
 
       data.forEach((user) => {
         const option = document.createElement("option");
         option.value = user.id;
-        option.text = user.username;
+        option.text = user.firstName + " " + user.lastName;
         userSelect.appendChild(option);
-
-        const editOption = document.createElement("option");
-        editOption.value = user.id;
-        editOption.text = user.username;
-        editUserSelect.appendChild(editOption);
       });
+      
     })
     .catch((error) => {
       console.error("Ошибка при загрузке данных о пользователях:", error);
@@ -83,7 +77,7 @@ document
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ discountPercentage, userId }),
+      body: JSON.stringify({ discountPercentage, user: { id: userId } })
     }).then((response) => {
       if (response.status === 201) {
         updateDiscountCardTable();
@@ -94,8 +88,6 @@ document
 
 function editDiscountCard(discountCardId) {
   const modal = document.getElementById("editDiscountCardModal");
-  const editForm = document.getElementById("editDiscountCardForm");
-  const cancelEditButton = document.getElementById("cancelEditDiscountCard");
 
   fetch(`http://localhost:8080/api/discount-cards/${discountCardId}`)
     .then((response) => response.json())
@@ -103,36 +95,32 @@ function editDiscountCard(discountCardId) {
       document.getElementById("editDiscountCardId").value = discountCardData.id;
       document.getElementById("editDiscountPercentage").value =
         discountCardData.discountPercentage;
-      document.getElementById("editUserSelect").value =
-        discountCardData.user.id;
+      document.getElementById("userId").value = discountCardData.userId;
     });
 
-  editForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+  submitEditDiscountCard.onclick = function () {
     const discountCardId = document.getElementById("editDiscountCardId").value;
     const discountPercentage = parseFloat(
       document.getElementById("editDiscountPercentage").value
     );
-    const userId = parseInt(document.getElementById("editUserSelect").value);
+    const userCardId = parseInt(
+      document.getElementById("userId").value
+    );
 
     fetch(`http://localhost:8080/api/discount-cards/${discountCardId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ discountPercentage, userId }),
+      body: JSON.stringify({ discountPercentage, user: { id: userCardId } }),
     }).then((response) => {
       if (response.status === 200) {
         modal.style.display = "none";
         updateDiscountCardTable();
       }
     });
-  });
-
-  cancelEditButton.onclick = function () {
-    modal.style.display = "none";
   };
-
+  
   modal.style.display = "block";
 }
 
