@@ -9,9 +9,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex) {
-        String error = ex.getReason();
-        return ResponseEntity.badRequest().body("{\"error\": \"" + error + "\"}");
-    }
+  @ExceptionHandler(ResponseStatusException.class)
+  public ResponseEntity<Object> handleResponseStatusException(
+    ResponseStatusException ex
+  ) {
+    String error = ex.getReason();
+    return ResponseEntity.badRequest().body("{\"error\": \"" + error + "\"}");
+  }
 }
