@@ -43,10 +43,10 @@
   </header>
 
   <main class="container mt-4">
-    <h1 class="mb-4">Управление пользователями</h1>
 
     <div class="row">
       <div class="col-md-6">
+        <h1 class="mb-4">Управление пользователями</h1>
         <form id="createUserForm">
           <div class="form-group">
             <label for="createUsername">Имя пользователя:</label>
@@ -67,6 +67,15 @@
             <label for="createLastName">Фамилия:</label>
             <input type="text" class="form-control" id="createLastName" name="lastName" />
           </div>
+          
+          <div class="form-group">
+            <label>Статус:</label>
+            <select for="SelectUserRole" id="SelectUserRole" class="form-select" aria-label="Default select example">
+              <option value="USER">Пользователь</option>
+              <option value="BARBER">Парикмахер</option>
+              <option value="MANAGER">Менеджер</option>
+            </select>
+          </div>
 
           <div class="text-center">
             <button type="submit" class="btn btn-outline-primary mt-3 mx-auto">
@@ -76,10 +85,19 @@
         </form>
       </div>
       <div class="col-md-6">
+        <div class="mt-4">
+          <label>Статус:</label>
+          <select id="UserRole" class="form-select" aria-label="Default select example">
+            <option value="ALL">Все</option>
+            <option value="USER">Пользователь</option>
+            <option value="BARBER">Парикмахер</option>
+            <option value="MANAGER">Менеджер</option>
+          </select>
+          </div>
         <table id="userTable" class="table table-striped table-light">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>№</th>
               <th>Имя пользователя</th>
               <th>Имя</th>
               <th>Фамилия</th>
@@ -124,6 +142,16 @@
               <label for="editUserLastName" class="col-form-label">Фамилия:</label>
               <input type="text" class="form-control" id="editUserLastName" name="lastName" />
             </div>
+
+            <div class="form-group">
+              <label>Статус:</label>
+              <select id="editUserRole" class="form-select" aria-label="Default select example">
+                <option value="USER">Пользователь</option>
+                <option value="BARBER">Парикмахер</option>
+                <option value="MANAGER">Менеджер</option>
+              </select>
+            </div>
+
           </form>
         </div>
 
@@ -166,6 +194,7 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
   <script src="users.js"></script>
+  <script src="filterUsersByRole.js"></script>
 </body>
 
 

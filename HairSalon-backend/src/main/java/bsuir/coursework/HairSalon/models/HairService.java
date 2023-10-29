@@ -31,8 +31,8 @@ public class HairService {
 
   @ElementCollection
   @CollectionTable(
-    name = "establishment_images",
-    joinColumns = @JoinColumn(name = "establishment_id")
+    name = "services_images",
+    joinColumns = @JoinColumn(name = "service_id")
   )
   @Column(name = "image_url")
   private List<String> images;

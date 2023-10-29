@@ -1,11 +1,14 @@
 function updateTable() {
+  const UserRoleSelect = document.getElementById("UserRole");
+  const UserRole = UserRoleSelect.value;
   fetch("http://localhost:8080/api/users")
     .then((response) => response.json())
     .then((data) => {
+      const filteredData = filterUsersByRole(data, UserRole);
       const tableBody = document.querySelector("#userTable tbody");
       tableBody.innerHTML = "";
-        let i = 0;
-      data.forEach((user) => {
+      let i = 0;
+      filteredData.forEach((user) => {
         i++;
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -23,6 +26,11 @@ function updateTable() {
     });
 }
 
+const UserRoleSelect = document.getElementById("UserRole");
+UserRoleSelect.addEventListener("change", () => {
+  updateTable();
+});
+
 document
   .getElementById("createUserForm")
   .addEventListener("submit", function (event) {
@@ -31,13 +39,14 @@ document
     const password = document.getElementById("createPassword").value;
     const firstName = document.getElementById("createFirstName").value;
     const lastName = document.getElementById("createLastName").value;
+    const role = document.getElementById("SelectUserRole").value;
 
     fetch("http://localhost:8080/api/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password, firstName, lastName }),
+      body: JSON.stringify({ username, password, firstName, lastName, role }),
     }).then((response) => {
       if (response.status === 201) {
         updateTable();
@@ -45,6 +54,7 @@ document
         document.getElementById("createPassword").value = "";
         document.getElementById("createFirstName").value = "";
         document.getElementById("createLastName").value = "";
+        document.getElementById("SelectUserRole").value = "USER";
       }
     });
   });
@@ -60,29 +70,32 @@ function showEditUserModal(userId) {
       document.getElementById("editUserPassword").value = "oleg";
       document.getElementById("editUserFirstName").value = userData.firstName;
       document.getElementById("editUserLastName").value = userData.lastName;
+      document.getElementById("editUserRole").value = userData.role;
     });
 
-    submitEditButton.onclick = function () {
+  submitEditButton.onclick = function () {
     const userId = document.getElementById("editUserId").value;
     const username = document.getElementById("editUserUsername").value;
     const password = document.getElementById("editUserPassword").value;
     const firstName = document.getElementById("editUserFirstName").value;
     const lastName = document.getElementById("editUserLastName").value;
+    const role = document.getElementById("editUserRole").value;
 
-    editUser(userId, username, password, firstName, lastName);
+    editUser(userId, username, password, firstName, lastName, role);
   };
 
 
   modal.style.display = "block";
 }
 
-function editUser(userId, username, password, firstName, lastName) {
+
+function editUser(userId, username, password, firstName, lastName, role) {
   fetch(`http://localhost:8080/api/users/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username, password, firstName, lastName }),
+    body: JSON.stringify({ username, password, firstName, lastName, role }),
   }).then((response) => {
     if (response.status === 200) {
       const modal = document.getElementById("editUserModal");

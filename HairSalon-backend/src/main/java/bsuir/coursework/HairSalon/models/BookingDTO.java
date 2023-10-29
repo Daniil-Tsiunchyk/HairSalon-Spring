@@ -20,12 +20,12 @@ public class BookingDTO {
     this.id = booking.getId();
     this.clientId = booking.getUser().getId();
     this.client =
-      booking.getUser().getFirstName() + booking.getUser().getLastName();
+      booking.getUser().getFirstName() + " " + booking.getUser().getLastName();
     this.hairServiceName = booking.getHairService().getName();
     this.hairServiceCost = booking.getHairService().getCost();
-    this.barberId = booking.getUser().getId();
+    this.barberId = booking.getBarber().getId();
     this.barber =
-      booking.getUser().getFirstName() + booking.getUser().getLastName();
+      booking.getBarber().getFirstName() + " " + booking.getBarber().getLastName();
     this.dateTime = booking.getDateTime();
     this.status = booking.getStatus();
   }

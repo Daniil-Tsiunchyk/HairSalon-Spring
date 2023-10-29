@@ -33,8 +33,8 @@ public class Booking {
 
   @ManyToOne
   @JoinColumn(name = "manager_id")
-  @Schema(description = "User representing the service manager")
-  private User serviceManager;
+  @Schema(description = "User representing the barber")
+  private User barber;
 
   @Column(name = "date_time", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)

@@ -73,17 +73,18 @@
 
       <div class="col-md-6">
         <div class="mt-4">
-        <label for="userSelect">Статус:</label>
-        <select class="form-select" aria-label="Default select example">
-          <option value="1">Активные</option>
-          <option value="2">Отменены</option>
-          <option value="3">Выполнены</option>
+        <label>Статус:</label>
+        <select id="BookingStatus" class="form-select" aria-label="Default select example">
+          <option value="ALL">Все</option>
+          <option value="RESERVED">Активные</option>
+          <option value="CANCELLED">Отменены</option>
+          <option value="CONFIRMED">Выполнены</option>
         </select>
         </div>
-        <table id="userTable" class="table table-striped table-light mb3">         
+        <table id="BookingTable" class="table table-striped table-light mb3">         
           <thead>
             <tr>
-              <th>ID</th>
+              <th>№</th>
               <th>Парикмахер</th>
               <th>Пользователь</th>
               <th>Услуга</th>
@@ -110,23 +111,18 @@
           <form id="editBookingForm">
             <input type="hidden" id="editBookingId" class="col-form-label" name="bookingId" />
             <div class="form-group">
-              <label for="editBookingUsername">Имя заказа:</label>
-              <input type="text" class="form-control" id="editBookingUsername" name="bookingName" required />
+              <label for="editBarber">Выберите парикмахера:</label>
+              <select class="form-control" id="editBarber" name="barberId" required></select>
             </div>
   
             <div class="form-group">
-              <label for="editBookingPassword" class="col-form-label">Описание заказа:</label>
-              <input type="text" class="form-control" id="editBookingDescription" name="bookingDescription" required />
+              <label for="editUser">Выберите пользователя:</label>
+              <select class="form-control" id="editUser" name="userId" required></select>
             </div>
   
             <div class="form-group">
-              <label for="editBookingFirstName" class="col-form-label">Дата заказа:</label>
-              <input type="text" class="form-control" id="editBookingDate" name="bookingDate" />
-            </div>
-  
-            <div class="form-group">
-              <label for="editBookingLastName" class="col-form-label">Цена заказа:</label>
-              <input type="text" class="form-control" id="editBookingPrice" name="bookingPrice" />
+              <label for="editService">Выберите услугу:</label>
+              <select class="form-control" id="editService" name="serviceId" required></select>
             </div>
           </form>
         </div>
@@ -171,6 +167,7 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
   <script src="bookings.js"></script>
+  <script src="filterUsersByRole.js"></script>
 
 </body>
 

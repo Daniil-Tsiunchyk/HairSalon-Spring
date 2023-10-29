@@ -109,7 +109,7 @@ public class BookingController {
         mediaType = "application/json",
         schema = @Schema(implementation = Booking.class),
         examples = @ExampleObject(
-          value = "{\"user\": {\"id\": 1}, \"hairService\": {\"id\": 1}, \"serviceManager\": {\"id\": 2}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}"
+          value = "{\"user\": {\"id\": 1}, \"hairService\": {\"id\": 1}, \"barber\": {\"id\": 2}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}"
         )
       )
     ) @RequestBody @Parameter(
@@ -141,7 +141,7 @@ public class BookingController {
         mediaType = "application/json",
         schema = @Schema(implementation = Booking.class),
         examples = @ExampleObject(
-          value = "{\"user\": {\"id\": 1}, \"hairService\": {\"id\": 1}, \"serviceManager\": {\"id\": 2}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}"
+          value = "{\"user\": {\"id\": 1}, \"hairService\": {\"id\": 1}, \"barber\": {\"id\": 2}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}"
         )
       )
     ) @RequestBody @Parameter(

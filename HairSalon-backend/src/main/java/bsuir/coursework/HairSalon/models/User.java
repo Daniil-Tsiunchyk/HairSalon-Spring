@@ -3,6 +3,8 @@ package bsuir.coursework.HairSalon.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 
 @Entity
@@ -46,6 +48,11 @@ public class User {
   @JsonIgnore
   private DiscountCard discountCard;
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  @Schema(description = "Bookings associated with the user")
+  @JsonIgnore
+  private List<Booking> bookings = new ArrayList<>();
+
   @Enumerated(EnumType.STRING)
   @Column(name = "role")
   @Schema(description = "Role of the user", example = "USER")
@@ -53,7 +60,7 @@ public class User {
 
   public enum UserRole {
     USER,
-    EMPLOYEE,
+    BARBER,
     MANAGER,
   }
 }
