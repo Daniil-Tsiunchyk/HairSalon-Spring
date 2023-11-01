@@ -14,9 +14,8 @@ function updateBookingTable() {
 
                     row.innerHTML = `
               <td>${i}</td>
-              <td>${booking.barber}</td>
-              <td>${booking.client}</td>
               <td>${booking.hairServiceName}</td>
+              <td>${booking.barber}</td>
               <td>${booking.dateTime}</td>
               <td>
                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editBookingModal" data-bs-whatever="@getbootstrap" onclick="showEditBooking(${booking.id})">Редактировать</button>

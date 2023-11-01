@@ -40,6 +40,7 @@ document
     const firstName = document.getElementById("createFirstName").value;
     const lastName = document.getElementById("createLastName").value;
     const role = document.getElementById("SelectUserRole").value;
+    console.log(role)
 
     fetch("http://localhost:8080/api/users/register", {
       method: "POST",

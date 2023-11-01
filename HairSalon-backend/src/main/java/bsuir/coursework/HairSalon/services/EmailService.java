@@ -1,12 +1,13 @@
 package bsuir.coursework.HairSalon.services;
 
+import bsuir.coursework.HairSalon.models.User;
+import bsuir.coursework.HairSalon.repositories.UserRepository;
 import jakarta.mail.Message;
 import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,38 +15,53 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
   private final Session mailSession;
+  private final UserRepository userRepository;
 
   @Autowired
-  public EmailService(Session mailSession) {
+  public EmailService(Session mailSession, UserRepository userRepository) {
     this.mailSession = mailSession;
+    this.userRepository = userRepository;
   }
 
-  public void sendResetCodeByEmail(String email, String resetCode) {
-    new Thread(() -> {
-      try {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date now = new Date();
-        Date expiration = new Date(now.getTime() + 5 * 60 * 1000);
+  public void sendEmail(String email, String subject, String text) {
+    try {
+      Message message = new MimeMessage(mailSession);
+      message.setFrom(new InternetAddress("lc.devsparkclub@yandex.by"));
+      message.setRecipient(
+        Message.RecipientType.TO,
+        new InternetAddress(email)
+      );
+      message.setSubject(subject);
+      message.setText(text);
+      Transport.send(message);
+    } catch (Exception e) {
+      System.err.println("Failed to send email to: " + email);
+    }
+  }
 
-        Message message = new MimeMessage(mailSession);
-        message.setFrom(new InternetAddress("lc.devsparkclub@yandex.by"));
-        message.setRecipient(
-          Message.RecipientType.TO,
-          new InternetAddress(email)
-        );
-        message.setSubject("Password Reset Code");
-        message.setText(
-          "Your password reset code is: " +
-          resetCode +
-          "\nExpires at: " +
-          sdf.format(expiration)
-        );
-        Transport.send(message);
-      } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println("Failed to send reset code email to: " + email);
+  public void sendSpam(
+    String email,
+    String subject,
+    String text,
+    User.UserRole role
+  ) {
+    try {
+      List<User> users = userRepository.findAll();
+      for (User user : users) {
+        if (user.getRole().equals(role)) {
+          Message message = new MimeMessage(mailSession);
+          message.setFrom(new InternetAddress("lc.devsparkclub@yandex.by"));
+          message.setRecipient(
+            Message.RecipientType.TO,
+            new InternetAddress(email)
+          );
+          message.setSubject(subject);
+          message.setText(text);
+          Transport.send(message);
+        }
       }
-    })
-      .start();
+    } catch (Exception e) {
+      System.err.println("Failed to send email to: " + email);
+    }
   }
 }

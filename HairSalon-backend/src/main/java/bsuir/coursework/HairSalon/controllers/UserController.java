@@ -235,55 +235,16 @@ public class UserController {
       ),
     }
   )
-  @GetMapping("/reset-code/check")
+  @PostMapping("/reset-code/check")
   public ResponseEntity<Boolean> checkResetCode(
     @Parameter(description = "User Email") @RequestParam String email,
     @Parameter(description = "Reset code") @RequestParam String resetCode
-  ) {
+  ) throws NoSuchAlgorithmException {
     boolean codeExists = userService.checkResetCode(email, resetCode);
     if (codeExists) {
       return ResponseEntity.ok(true);
     } else {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
-    }
-  }
-
-  @Operation(
-    summary = "Reset user password",
-    description = "Reset user password using the provided reset code.",
-    responses = {
-      @ApiResponse(
-        responseCode = "200",
-        description = "Password reset successful"
-      ),
-      @ApiResponse(responseCode = "400", description = "Invalid reset code"),
-      @ApiResponse(responseCode = "404", description = "Reset code not found"),
-    }
-  )
-  @PostMapping("/reset-password")
-  public ResponseEntity<String> resetPassword(
-    @Parameter(description = "User Email") @RequestParam String email,
-    @Parameter(description = "Reset code") @RequestParam String resetCode,
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = User.class),
-        examples = @ExampleObject(value = "{\"password\": \"new_password\"}")
-      )
-    ) @RequestBody @Parameter(description = "New password") User user
-  ) throws NoSuchAlgorithmException {
-    boolean resetSuccessful = userService.resetPassword(
-      email,
-      resetCode,
-      user.getPassword()
-    );
-    if (resetSuccessful) {
-      String jsonResponse = "{\"resetCode\":\"" + resetCode + "\"}";
-      return ResponseEntity.ok(jsonResponse);
-    } else {
-      return ResponseEntity
-        .status(HttpStatus.BAD_REQUEST)
-        .body("Invalid reset code");
     }
   }
 }

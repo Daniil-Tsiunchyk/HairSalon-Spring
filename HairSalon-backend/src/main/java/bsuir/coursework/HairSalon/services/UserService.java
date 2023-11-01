@@ -7,8 +7,10 @@ import bsuir.coursework.HairSalon.models.User;
 import bsuir.coursework.HairSalon.repositories.ResetCodeRepository;
 import bsuir.coursework.HairSalon.repositories.UserRepository;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,14 +76,26 @@ public class UserService {
     if (user != null) {
       String resetCode = generateCode();
       saveResetCode(email, resetCode);
-      emailService.sendResetCodeByEmail(email, resetCode);
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+      Date now = new Date();
+      Date expiration = new Date(now.getTime() + 5 * 60 * 1000);
+
+      emailService.sendEmail(
+        email,
+        "Password Reset Code",
+        "Your password reset code is: " +
+        resetCode +
+        "\nExpires at: " +
+        sdf.format(expiration)
+      );
       return resetCode;
     } else {
       return null;
     }
   }
 
-  public boolean checkResetCode(String email, String resetCode) {
+  public boolean checkResetCode(String email, String resetCode)
+    throws NoSuchAlgorithmException {
     ResetCode storedResetCode = resetCodeRepository.findByUserEmailAndCode(
       email,
       resetCode
@@ -91,21 +105,19 @@ public class UserService {
       LocalDateTime currentTime = LocalDateTime.now();
       Duration duration = Duration.between(creationTime, currentTime);
       long minutesPassed = duration.toMinutes();
-      return minutesPassed <= 5;
-    }
-    return false;
-  }
-
-  public boolean resetPassword(
-    String email,
-    String resetCode,
-    String newPassword
-  ) throws NoSuchAlgorithmException {
-    if (checkResetCode(email, resetCode)) {
-      User user = userRepository.findByEmail(email);
-      if (user != null) {
-        user.setPassword(hashPassword(newPassword));
-        userRepository.save(user);
+      if (minutesPassed <= 5) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+          String newPassword = generateCode();
+          emailService.sendEmail(
+            email,
+            "New Password - DevSparkClub",
+            "Your new password is: " + newPassword
+          );
+          user.setPassword(hashPassword(newPassword));
+          userRepository.save(user);
+          return true;
+        }
         return true;
       }
     }

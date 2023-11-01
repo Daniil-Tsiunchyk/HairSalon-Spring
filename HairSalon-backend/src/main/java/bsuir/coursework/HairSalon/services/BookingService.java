@@ -51,6 +51,7 @@ public class BookingService {
     if (existingBooking.isPresent()) {
       Booking booking = existingBooking.get();
       booking.setUser(updatedBooking.getUser());
+      booking.setBarber(updatedBooking.getBarber());
       booking.setHairService(updatedBooking.getHairService());
       booking.setDateTime(updatedBooking.getDateTime());
       booking.setStatus(updatedBooking.getStatus());

@@ -39,8 +39,9 @@ public class Booking {
   @Column(name = "date_time", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @Schema(
-    description = "Date and time of the booking",
-    example = "2023-10-19T14:30:00Z"
+          description = "Date and time of the booking",
+          example = "2023-10-19T14:30",
+          format = "yyyy-MM-dd'T'HH:mm"
   )
   private Date dateTime;
 
