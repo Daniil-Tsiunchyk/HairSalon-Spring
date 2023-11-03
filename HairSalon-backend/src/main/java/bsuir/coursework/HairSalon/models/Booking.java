@@ -2,7 +2,8 @@ package bsuir.coursework.HairSalon.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 import lombok.Data;
 
 @Entity
@@ -39,11 +40,9 @@ public class Booking {
   @Column(name = "date_time", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @Schema(
-          description = "Date and time of the booking",
-          example = "2023-10-19T14:30",
-          format = "yyyy-MM-dd'T'HH:mm"
+          description = "Date and time of the booking"
   )
-  private Date dateTime;
+  private LocalDateTime dateTime;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)

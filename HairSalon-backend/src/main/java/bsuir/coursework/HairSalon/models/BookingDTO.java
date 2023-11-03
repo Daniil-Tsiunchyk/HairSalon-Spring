@@ -1,6 +1,6 @@
 package bsuir.coursework.HairSalon.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
@@ -9,11 +9,12 @@ public class BookingDTO {
   private Integer id;
   private Integer clientId;
   private String client;
+  private Integer serviceId;
   private String hairServiceName;
   private Double hairServiceCost;
   private Integer barberId;
   private String barber;
-  private Date dateTime;
+  private LocalDateTime dateTime;
   private Booking.ServiceStatus status;
 
   public BookingDTO(Booking booking) {
@@ -21,6 +22,7 @@ public class BookingDTO {
     this.clientId = booking.getUser().getId();
     this.client =
       booking.getUser().getFirstName() + " " + booking.getUser().getLastName();
+    this.serviceId = booking.getHairService().getId();
     this.hairServiceName = booking.getHairService().getName();
     this.hairServiceCost = booking.getHairService().getCost();
     this.barberId = booking.getBarber().getId();

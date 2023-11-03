@@ -40,28 +40,28 @@ public class EmailService {
   }
 
   public void sendSpam(
-    String email,
     String subject,
     String text,
     User.UserRole role
   ) {
-    try {
+
       List<User> users = userRepository.findAll();
       for (User user : users) {
         if (user.getRole().equals(role)) {
+          try {
           Message message = new MimeMessage(mailSession);
           message.setFrom(new InternetAddress("lc.devsparkclub@yandex.by"));
           message.setRecipient(
             Message.RecipientType.TO,
-            new InternetAddress(email)
+            new InternetAddress(user.getEmail())
           );
           message.setSubject(subject);
           message.setText(text);
           Transport.send(message);
+          } catch (Exception e) {
+            System.err.println("Failed to send email to: " + user.getEmail());
+          }
         }
       }
-    } catch (Exception e) {
-      System.err.println("Failed to send email to: " + email);
-    }
   }
 }

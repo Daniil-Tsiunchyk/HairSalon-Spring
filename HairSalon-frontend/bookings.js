@@ -143,7 +143,7 @@ document
         const barberID = parseInt(document.getElementById("barberSelect").value);
         const userId = parseInt(document.getElementById("userSelect").value);
         const serviceId = parseInt(document.getElementById("serviceSelect").value);
-        const dateTime = document.getElementById("dateTime");
+        const dateTime = document.getElementById("dateTime").value;
 
         fetch("http://localhost:8080/api/bookings", {
             method: "POST",
@@ -170,7 +170,7 @@ function showEditBooking(BookingId) {
             document.getElementById("editBarber").value = BookingData.barberID;
             document.getElementById("editUser").value = BookingData.userId;
             document.getElementById("editService").value = BookingData.serviceId;
-            document.getElementById("editDateTime") = BookingData.DateTime;
+            document.getElementById("editDateTime").value = BookingData.DateTime;
         });
 
     submitEditButton.onclick = function () {
@@ -178,7 +178,7 @@ function showEditBooking(BookingId) {
         const barberID = parseInt(document.getElementById("editBarber").value);
         const userId = parseInt(document.getElementById("editUser").value);
         const serviceId = parseInt(document.getElementById("editService").value);
-        const editDateTime = document.getElementById("editDateTime");
+        const editDateTime = document.getElementById("editDateTime").value;
         console.log(JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: editDateTime, status: "RESERVED" }),
         )
 

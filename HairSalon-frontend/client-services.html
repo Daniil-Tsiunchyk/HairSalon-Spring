@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление услугами</title>
+    <title>Список услуг</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -44,7 +44,7 @@
                             <th>№</th>
                             <th>Название услуги</th>
                             <th>Стоимость</th>
-                            <th>Действия</th>
+                            <th>Заказать услугу</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
@@ -53,31 +53,31 @@
     </main>
 
 
-    <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+    <div class="modal fade" id="bookingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h3>Редактировать услугу</h3>
+              <h2>Заказать услугу</h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
     
             <div class="modal-body">
-                <form id="editServiceForm">
-                    <input type="hidden" id="editServiceId" name="serviceId">
+                <form id="bookingForm">
+                    <input type="hidden" id="bookingId" name="bookingId">
                     <div class="form-group">
-                        <label for="editServiceName">Название услуги:</label>
-                        <input type="text" class="form-control" id="editServiceName" name="name" required>
+                      <label for="editBarber">Выберите парикмахера:</label>
+                      <select class="form-control" id="editBarber" name="barberId" required></select>
                     </div>
         
                     <div class="form-group">
-                        <label for="editServiceCost">Стоимость:</label>
-                        <input type="number" min="1" max="1500" class="form-control" id="editServiceCost" name="cost" required>
+                      <label for="dateTime">Выберите дату и время:</label>
+                      <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required>
                     </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-              <button id="submitEditService" class="btn btn-outline-primary mb-2" data-bs-dismiss="modal">
+              <button type="submit" id="submitBooking" class="btn btn-outline-primary mb-2" data-bs-dismiss="modal">
                 Сохранить
               </button>
               <button class="btn btn-outline-secondary mb-2" data-bs-dismiss="modal">
@@ -89,24 +89,6 @@
       </div>
     
 
-    <div id="deleteServiceModal" class="modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <p>Вы уверены, что хотите удалить эту услугу?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id="confirmDeleteService" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                Да
-              </button>
-              <button type="button" id="cancelDeleteService" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                Отмена
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
     <footer class="text-center mt-4 fixed-bottom">
         Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
     </footer>
@@ -114,7 +96,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="client-services.js"></script>
+    <script src="services.js"></script>
+    <script src="filterUsersByRole.js"></script>
 </body>
 
 </html>

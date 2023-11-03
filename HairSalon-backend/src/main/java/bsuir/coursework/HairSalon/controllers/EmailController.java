@@ -24,12 +24,11 @@ public class EmailController {
   )
   @PostMapping
   public ResponseEntity<Void> sendEmail(
-    @RequestParam String email,
     @RequestParam String subject,
     @RequestParam String text,
     @RequestParam String role
   ) {
-    emailService.sendSpam(email, subject, text, User.UserRole.valueOf(role));
+    emailService.sendSpam(subject, text, User.UserRole.valueOf(role));
     return ResponseEntity.noContent().build();
   }
 }
