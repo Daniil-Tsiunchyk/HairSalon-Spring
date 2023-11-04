@@ -11,12 +11,12 @@ function updateBookingTable() {
                 filteredData.forEach((booking) => {
                     const row = document.createElement("tr");
                     i++;
-                    
+
                     row.innerHTML = `
                     <td class="text-warning-emphasis">${i}</td>
                     <td>${booking.hairServiceName}</td>
                     <td>${booking.barber}</td>
-                    <td>${booking.dateTime}</td>
+                    <td>${formatDateTime(booking.dateTime)}</td>
                     <td>
                       <button class="btn btn-outline-dark" type="button" data-bs-toggle="modal" data-bs-target="#editBookingModal" data-bs-whatever="@getbootstrap" onclick="showEditBooking(${booking.id})">Редактировать</button>
                       <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#declineBookingModal" onclick="showDeclineBookingModal(${booking.id})">Отменить заказ</button>
@@ -114,19 +114,24 @@ document
         const userId = 15;
         const serviceId = parseInt(document.getElementById("serviceSelect").value);
         const dateTime = document.getElementById("dateTime").value;
+        
+        if (checkBookingAvailability(barberID, dateTime)) {
 
-        fetch("http://localhost:8080/api/bookings", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: dateTime, status: "RESERVED" })
+            fetch("http://localhost:8080/api/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: dateTime, status: "RESERVED" })
 
-        }).then((response) => {
-            if (response.status === 201) {
-                updateBookingTable();
-            }
-        });
+            }).then((response) => {
+                if (response.status === 201) {
+                    updateBookingTable();
+                }
+            });
+        } else {
+            alert("Выбранное время занято. Пожалуйста, выберите другое время.");
+        }
     });
 
 function showEditBooking(BookingId) {
@@ -206,6 +211,16 @@ function declineBooking(BookingId, userId, serviceId, barberID, DateTime) {
             updateBookingTable();
         }
     });
+}
+
+function formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    const formattedDate = `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    return formattedDate;
+}
+
+function checkBookingAvailability(barberId, dateTime) {
+    return true;
 }
 
 loadBarbersIntoSelects();
