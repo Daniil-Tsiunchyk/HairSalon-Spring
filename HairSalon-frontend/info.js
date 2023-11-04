@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const salesChart = document.getElementById("salesChart");
             const salesDates = Object.keys(salesData);
+            salesDates.sort();
             const salesValues = Object.values(salesData);
 
             new Chart(salesChart, {
