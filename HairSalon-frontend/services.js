@@ -21,7 +21,7 @@ function updateServiceTable() {
     .then((data) => {
       const tableBody = document.querySelector("#serviceTable tbody");
       tableBody.innerHTML = "";
-        let i = 0;
+      let i = 0;
       data.forEach((service) => {
         i++;
         const row = document.createElement("tr");
@@ -74,16 +74,16 @@ function editService(serviceId) {
       document.getElementById("editServiceCost").value = serviceData.cost;
       if (serviceData.cost < 0) {
         document.getElementById("editServiceCost").value = 0;
-      } 
+      }
     });
 
-    submitEditService.onclick = function () {
+  submitEditService.onclick = function () {
     const serviceId = document.getElementById("editServiceId").value;
     const name = document.getElementById("editServiceName").value;
-        let cost = document.getElementById("editServiceCost").value;
+    let cost = document.getElementById("editServiceCost").value;
     if (cost < 0) {
       cost = 0;
-    } 
+    }
 
 
     fetch(`http://localhost:8080/api/hair-services/${serviceId}`, {

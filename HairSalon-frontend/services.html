@@ -2,153 +2,154 @@
 <html lang="">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление услугами</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Управление услугами</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body class="bg-light">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-brand bg-secondary bg-opacity-10 bg-gradient">
-            <a class="navbar-brand ms-3" href="#">Парикмахерская</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-brand bg-secondary bg-opacity-10 bg-gradient">
+      <a class="navbar-brand ms-3" href="#">Парикмахерская</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="mx-auto d-flex justify-content-between">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="users.html">Пользователи</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="services.html">Услуги</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="discount-cards.html">Дисконтные карты</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bookings.html">Брони</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="info.html">Аналитика</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="spam.html">Спам-рассылка</a>
+            </li>
+          </ul>
+        </div>
+        <a class="nav-link link-danger me-3" href="logout.html">Выход</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mt-4">
+    <h1 class="mb-4">Управление услугами</h1>
+
+    <div class="row">
+      <div class="col-md-6">
+        <form id="createServiceForm">
+          <div class="form-group">
+            <label for="createServiceName">Название услуги:</label>
+            <input type="text" class="form-control" id="createServiceName" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="createServiceCost">Стоимость:</label>
+            <input type="number" class="form-control" id="createServiceCost" name="cost" required>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-outline-primary mt-3 mx-auto">
+              Создать
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="mx-auto d-flex justify-content-between">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="users.html">Пользователи</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="services.html">Услуги</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="discount-cards.html">Дисконтные карты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="bookings.html">Брони</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="info.html">Аналитика</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="spam.html">Спам-рассылка</a>
-                        </li>
-                    </ul>
-                </div>
-                <a class="nav-link link-danger me-3" href="logout.html">Выход</a>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mt-4">
-        <h1 class="mb-4">Управление услугами</h1>
-
-        <div class="row">
-            <div class="col-md-6">
-                <form id="createServiceForm">
-                    <div class="form-group">
-                        <label for="createServiceName">Название услуги:</label>
-                        <input type="text" class="form-control" id="createServiceName" name="name" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="createServiceCost">Стоимость:</label>
-                        <input type="number" class="form-control" id="createServiceCost" name="cost" required>
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-outline-primary mt-3 mx-auto">
-                          Создать
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="col-md-6">
-                <table id="serviceTable" class="table table-striped table-light">
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Название услуги</th>
-                            <th>Стоимость</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-
-    <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3>Редактировать услугу</h3>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-    
-            <div class="modal-body">
-                <form id="editServiceForm">
-                    <input type="hidden" id="editServiceId" name="serviceId">
-                    <div class="form-group">
-                        <label for="editServiceName">Название услуги:</label>
-                        <input type="text" class="form-control" id="editServiceName" name="name" required>
-                    </div>
-        
-                    <div class="form-group">
-                        <label for="editServiceCost">Стоимость:</label>
-                        <input type="number" min="1" max="1500" class="form-control" id="editServiceCost" name="cost" required>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-              <button id="submitEditService" class="btn btn-outline-primary mb-2" data-bs-dismiss="modal">
-                Сохранить
-              </button>
-              <button class="btn btn-outline-secondary mb-2" data-bs-dismiss="modal">
-                Отмена
-              </button>
-            </div>
           </div>
-        </div>
-      </div>
-    
-
-    <div id="deleteServiceModal" class="modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <p>Вы уверены, что хотите удалить эту услугу?</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id="confirmDeleteService" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                Да
-              </button>
-              <button type="button" id="cancelDeleteService" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                Отмена
-              </button>
-            </div>
-          </div>
-        </div>
+        </form>
       </div>
 
-    <footer class="text-center mt-4 fixed-bottom">
-        Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
-    </footer>
+      <div class="col-md-6">
+        <table id="serviceTable" class="table table-striped table-light">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Название услуги</th>
+              <th>Стоимость</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="services.js"></script>
+
+  <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Редактировать услугу</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="editServiceForm">
+            <input type="hidden" id="editServiceId" name="serviceId">
+            <div class="form-group">
+              <label for="editServiceName">Название услуги:</label>
+              <input type="text" class="form-control" id="editServiceName" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="editServiceCost">Стоимость:</label>
+              <input type="number" min="1" max="1500" class="form-control" id="editServiceCost" name="cost" required>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button id="submitEditService" class="btn btn-outline-primary mb-2" data-bs-dismiss="modal">
+            Сохранить
+          </button>
+          <button class="btn btn-outline-secondary mb-2" data-bs-dismiss="modal">
+            Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="deleteServiceModal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p>Вы уверены, что хотите удалить эту услугу?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="confirmDeleteService" class="btn btn-outline-danger" data-bs-dismiss="modal">
+            Да
+          </button>
+          <button type="button" id="cancelDeleteService" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center mt-4 fixed-bottom">
+    Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это окно сделано за одну выпитую кружку кофе.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="services.js"></script>
 </body>
 
 </html>

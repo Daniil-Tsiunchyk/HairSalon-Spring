@@ -21,9 +21,9 @@ function updateDiscountCardTable() {
     .then((data) => {
       const tableBody = document.querySelector("#discountCardTable tbody");
       tableBody.innerHTML = "";
-        let i = 0;
+      let i = 0;
       data.forEach((discountCard) => {
-          const row = document.createElement("tr");
+        const row = document.createElement("tr");
         i++;
         row.innerHTML = `
                       <td>${i}</td>
@@ -56,7 +56,7 @@ function loadUsersIntoSelects() {
         option.text = user.firstName + " " + user.lastName;
         userSelect.appendChild(option);
       });
-      
+
     })
     .catch((error) => {
       console.error("Ошибка при загрузке данных о пользователях:", error);
@@ -120,7 +120,7 @@ function editDiscountCard(discountCardId) {
       }
     });
   };
-  
+
   modal.style.display = "block";
 }
 
