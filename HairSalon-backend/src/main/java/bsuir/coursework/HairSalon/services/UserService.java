@@ -112,7 +112,7 @@ public class UserService {
           String newPassword = generateCode();
           emailService.sendEmail(
             email,
-            "New Password - DevSparkClub",
+            "New Password",
             "Your new password is: " + newPassword
           );
           user.setPassword(hashPassword(newPassword));
