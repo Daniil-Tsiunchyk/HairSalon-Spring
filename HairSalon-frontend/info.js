@@ -91,6 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
                         },
                         y: {
+                            beginAtZero: true,
+                            suggestedMax: Math.max(...salesValues) + 10,
                             title: {
                                 display: true,
                                 text: 'Сумма'

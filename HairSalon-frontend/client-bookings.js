@@ -46,12 +46,10 @@ function filterBookingsByStatus(data, status) {
 
 
 function loadBarbersIntoSelects() {
-    console.log("Запрос на получение списка парикмахеров...");
     fetch("http://localhost:8080/api/users")
         .then((response) => response.json())
         .then((data) => {
             const filteredData = filterUsersByRole(data, "BARBER");
-            console.log("Данные о парикмахерах получены:", filteredData);
 
             const barberSelect = document.getElementById("barberSelect");
             const editBarber = document.getElementById("editBarber");
@@ -77,11 +75,9 @@ function loadBarbersIntoSelects() {
 }
 
 function loadServiceIntoSelects() {
-    console.log("Запрос на получение списка услуг...");
     fetch("http://localhost:8080/api/hair-services")
         .then((response) => response.json())
         .then((data) => {
-            console.log("Данные об услугах получены:", data);
 
             const serviceSelect = document.getElementById("serviceSelect");
             const editService = document.getElementById("editService");
@@ -111,10 +107,10 @@ document
     .addEventListener("submit", function (event) {
         event.preventDefault();
         const barberID = parseInt(document.getElementById("barberSelect").value);
-        const userId = 15;
+        const userId = 5;
         const serviceId = parseInt(document.getElementById("serviceSelect").value);
         const dateTime = document.getElementById("dateTime").value;
-        
+
         if (checkBookingAvailability(barberID, dateTime)) {
 
             fetch("http://localhost:8080/api/bookings", {
@@ -142,15 +138,15 @@ function showEditBooking(BookingId) {
             document.getElementById("editBookingId").value = BookingData.id;
             document.getElementById("editBarber").value = BookingData.barberID;
             document.getElementById("editService").value = BookingData.serviceId;
-            document.getElementById("DateTime").value = BookingData.dateTime;
+            document.getElementById("dateTime").value = BookingData.dateTime;
         });
 
     submitEditButton.onclick = function () {
         const BookingId = parseInt(document.getElementById("editBookingId").value);
         const barberID = parseInt(document.getElementById("editBarber").value);
-        const userId = 15;
+        const userId = 5;
         const serviceId = parseInt(document.getElementById("editService").value);
-        const editDateTime = document.getElementById("DateTime").value;
+        const editDateTime = document.getElementById("dateTime").value;
 
         editBooking(BookingId, userId, serviceId, barberID, editDateTime);
     }
@@ -180,7 +176,6 @@ function showDeclineBookingModal(BookingId) {
     fetch(`http://localhost:8080/api/bookings/${BookingId}`)
         .then((response) => response.json())
         .then((BookingData) => {
-            console.log(BookingData);
             document.getElementById("declineBookingId").value = BookingData.id;
             document.getElementById("declineBarber").value = BookingData.barberId;
             document.getElementById("declineService").value = BookingData.serviceId;
@@ -188,10 +183,9 @@ function showDeclineBookingModal(BookingId) {
         });
 
     confirmButton.onclick = function () {
-        console.log(document.getElementById("declineService").value)
         const BookingId = parseInt(document.getElementById("declineBookingId").value);
         const barberID = parseInt(document.getElementById("declineBarber").value);
-        const userId = 15;
+        const userId = 5;
         const serviceId = parseInt(document.getElementById("declineService").value);
         const DateTime = document.getElementById("declineDateTime").value;
         declineBooking(BookingId, userId, serviceId, barberID, DateTime);
@@ -199,7 +193,6 @@ function showDeclineBookingModal(BookingId) {
 }
 
 function declineBooking(BookingId, userId, serviceId, barberID, DateTime) {
-    console.log(JSON.stringify({ BookingId, user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: DateTime, status: "CANCELLED" }))
     fetch(`http://localhost:8080/api/bookings/${BookingId}`, {
         method: "PUT",
         headers: {

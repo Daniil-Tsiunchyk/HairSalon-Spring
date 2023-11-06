@@ -26,7 +26,7 @@ function updateServiceTable() {
 function createBooking(serviceId) {
   submitBooking.onclick = function () {
     const barberID = parseInt(document.getElementById("editBarber").value);
-    const userId = 15;
+    const userId = 5;
     const dateTime = document.getElementById("dateTime").value;
 
     console.log({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: dateTime, status: "RESERVED" })

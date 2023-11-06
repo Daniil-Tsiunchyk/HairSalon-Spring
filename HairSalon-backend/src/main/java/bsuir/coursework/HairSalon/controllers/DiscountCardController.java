@@ -1,7 +1,7 @@
 package bsuir.coursework.HairSalon.controllers;
 
 import bsuir.coursework.HairSalon.models.DiscountCard;
-import bsuir.coursework.HairSalon.models.DiscountCardDTO;
+import bsuir.coursework.HairSalon.models.dto.DiscountCardDTO;
 import bsuir.coursework.HairSalon.services.DiscountCardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

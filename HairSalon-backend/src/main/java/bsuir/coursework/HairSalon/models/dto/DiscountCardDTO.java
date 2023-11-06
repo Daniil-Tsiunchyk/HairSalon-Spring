@@ -1,5 +1,6 @@
-package bsuir.coursework.HairSalon.models;
+package bsuir.coursework.HairSalon.models.dto;
 
+import bsuir.coursework.HairSalon.models.DiscountCard;
 import lombok.Data;
 
 @Data

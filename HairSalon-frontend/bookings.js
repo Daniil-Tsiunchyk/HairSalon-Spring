@@ -158,6 +158,9 @@ document
                     updateBookingTable();
                 }
             });
+            document.getElementById("dateTime").value = "";
+
+            alert("Успешное бронирование");
         } else {
             alert("Выбранное время занято. Пожалуйста, выберите другое время.");
         }

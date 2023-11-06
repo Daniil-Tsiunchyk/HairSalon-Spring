@@ -1,6 +1,8 @@
-package bsuir.coursework.HairSalon.models;
+package bsuir.coursework.HairSalon.models.dto;
 
 import java.time.LocalDateTime;
+
+import bsuir.coursework.HairSalon.models.Booking;
 import lombok.Data;
 
 @Data

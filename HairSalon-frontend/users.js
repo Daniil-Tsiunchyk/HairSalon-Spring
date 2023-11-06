@@ -37,6 +37,7 @@ document
     event.preventDefault();
     const username = document.getElementById("createUsername").value;
     const password = document.getElementById("createPassword").value;
+    const email = document.getElementById("createEmail").value;
     const firstName = document.getElementById("createFirstName").value;
     const lastName = document.getElementById("createLastName").value;
     const role = document.getElementById("SelectUserRole").value;
@@ -47,7 +48,7 @@ document
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password, firstName, lastName, role }),
+      body: JSON.stringify({ username, email, password, firstName, lastName, role }),
     }).then((response) => {
       if (response.status === 201) {
         updateTable();
@@ -55,6 +56,7 @@ document
         document.getElementById("createPassword").value = "";
         document.getElementById("createFirstName").value = "";
         document.getElementById("createLastName").value = "";
+        document.getElementById("createEmail").value = "";
         document.getElementById("SelectUserRole").value = "USER";
       }
     });
@@ -69,6 +71,7 @@ function showEditUserModal(userId) {
       document.getElementById("editUserId").value = userData.id;
       document.getElementById("editUserUsername").value = userData.username;
       document.getElementById("editUserPassword").value = "oleg";
+      document.getElementById("editUserEmail").value = userData.email;
       document.getElementById("editUserFirstName").value = userData.firstName;
       document.getElementById("editUserLastName").value = userData.lastName;
       document.getElementById("editUserRole").value = userData.role;
@@ -78,11 +81,12 @@ function showEditUserModal(userId) {
     const userId = document.getElementById("editUserId").value;
     const username = document.getElementById("editUserUsername").value;
     const password = document.getElementById("editUserPassword").value;
+    const email = document.getElementById("editUserEmail").value;
     const firstName = document.getElementById("editUserFirstName").value;
     const lastName = document.getElementById("editUserLastName").value;
     const role = document.getElementById("editUserRole").value;
 
-    editUser(userId, username, password, firstName, lastName, role);
+    editUser(userId, username, password, email, firstName, lastName, role);
   };
 
 
@@ -90,13 +94,13 @@ function showEditUserModal(userId) {
 }
 
 
-function editUser(userId, username, password, firstName, lastName, role) {
+function editUser(userId, username, password, email, firstName, lastName, role) {
   fetch(`http://localhost:8080/api/users/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username, password, firstName, lastName, role }),
+    body: JSON.stringify({ username, email, password, firstName, lastName, role }),
   }).then((response) => {
     if (response.status === 200) {
       const modal = document.getElementById("editUserModal");

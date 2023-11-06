@@ -1,7 +1,7 @@
 package bsuir.coursework.HairSalon.controllers;
 
 import bsuir.coursework.HairSalon.models.Booking;
-import bsuir.coursework.HairSalon.models.BookingDTO;
+import bsuir.coursework.HairSalon.models.dto.BookingDTO;
 import bsuir.coursework.HairSalon.services.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

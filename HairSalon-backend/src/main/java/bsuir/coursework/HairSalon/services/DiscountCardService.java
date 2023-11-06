@@ -1,7 +1,7 @@
 package bsuir.coursework.HairSalon.services;
 
 import bsuir.coursework.HairSalon.models.DiscountCard;
-import bsuir.coursework.HairSalon.models.DiscountCardDTO;
+import bsuir.coursework.HairSalon.models.dto.DiscountCardDTO;
 import bsuir.coursework.HairSalon.repositories.DiscountCardRepository;
 import java.util.List;
 import java.util.Optional;
