@@ -19,11 +19,25 @@ public class EmailController {
   }
 
   @Operation(
-    summary = "Send emails to user with some role",
-    description = "Endpoint to send email to users"
+    summary = "Send email to user with some role",
+    description = "Endpoint to send email to the user"
   )
   @PostMapping
   public ResponseEntity<Void> sendEmail(
+    @RequestParam String email,
+    @RequestParam String subject,
+    @RequestParam String text
+  ) {
+    emailService.sendEmail(email, subject, text);
+    return ResponseEntity.noContent().build();
+  }
+
+  @Operation(
+    summary = "Send emails to user with some role",
+    description = "Endpoint to send email to users"
+  )
+  @PostMapping("spam")
+  public ResponseEntity<Void> sendSpam(
     @RequestParam String subject,
     @RequestParam String text,
     @RequestParam String role

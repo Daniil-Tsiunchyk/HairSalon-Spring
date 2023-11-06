@@ -10,7 +10,7 @@ public class MailConfig {
 
   private final String username = "lc.devsparkclub@yandex.by";
 
-  private final String password = "xhnawltysmwjcryy";
+  private final String password = "libkrhghwcfcvqzj";
 
   @Bean
   public Session mailSession() {

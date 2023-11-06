@@ -8,6 +8,7 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,29 +40,16 @@ public class EmailService {
     }
   }
 
-  public void sendSpam(
-    String subject,
-    String text,
-    User.UserRole role
-  ) {
-
-      List<User> users = userRepository.findAll();
-      for (User user : users) {
-        if (user.getRole().equals(role)) {
-          try {
-          Message message = new MimeMessage(mailSession);
-          message.setFrom(new InternetAddress("lc.devsparkclub@yandex.by"));
-          message.setRecipient(
-            Message.RecipientType.TO,
-            new InternetAddress(user.getEmail())
-          );
-          message.setSubject(subject);
-          message.setText(text);
-          Transport.send(message);
-          } catch (Exception e) {
-            System.err.println("Failed to send email to: " + user.getEmail());
-          }
-        }
+  public void sendSpam(String subject, String text, User.UserRole role) {
+    List<User> users = userRepository.findAll();
+    for (User user : users) {
+      if (
+        user.getRole().equals(role) &&
+        !Objects.equals(user.getEmail(), "") &&
+        user.getEmail() != null
+      ) {
+        sendEmail(user.getEmail(), subject, text);
       }
+    }
   }
 }

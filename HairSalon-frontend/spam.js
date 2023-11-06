@@ -6,18 +6,22 @@ document
         const text = document.getElementById("setText").value;
         const role = document.getElementById("SelectUserRole").value;
 
-        fetch("http://localhost:8080//api/emails", {
+        const url = `http://localhost:8080/api/emails/spam?subject=${encodeURIComponent(subject)}&text=${encodeURIComponent(text)}&role=${role}`;
+
+        fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ subject, text, role }),
         }).then((response) => {
-            if (response.status === 201) {
-                updateTable();
+            if (response.status === 204) {
+                alert("Сообщение успешно отправлено!");
+
                 document.getElementById("setSubject").value = "";
                 document.getElementById("setText").value = "";
                 document.getElementById("SelectUserRole").value = "USER";
+            } else {
+                alert("Ошибка при отправке сообщения.");
             }
         });
     });
