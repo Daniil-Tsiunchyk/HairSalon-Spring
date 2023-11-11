@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Брони</title>
+  <title>Ваши заказы</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 </head>
@@ -21,25 +21,13 @@
         <div class="mx-auto d-flex justify-content-between">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="users.html">Пользователи</a>
+              <a class="nav-link" href="client-services.html">Список услуг</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="services.html">Услуги</a>
+              <a class="nav-link active" href="client-bookings.html">Ваши заказы</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="discount-cards.html">Дисконтные карты</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="bookings.html">Брони</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="info.html">Аналитика</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="spam.html">Спам-рассылка</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="manager-settings.html">Настройки</a>
+              <a class="nav-link" href="client-settings.html">Настройки</a>
             </li>
           </ul>
         </div>
@@ -49,18 +37,14 @@
   </header>
 
   <main class="container mt-4">
+
     <div class="row">
       <div class="col-md-6">
-        <h1 class="mb-4">Брони</h1>
+        <h1 class="mb-4">Ваши заказы</h1>
         <form id="createBookingForm">
           <div class="form-group">
             <label for="barberSelect">Выберите парикмахера:</label>
             <select class="form-control" id="barberSelect" name="barberId" required></select>
-          </div>
-
-          <div class="form-group">
-            <label for="userSelect">Выберите пользователя:</label>
-            <select class="form-control" id="userSelect" name="userId" required></select>
           </div>
 
           <div class="form-group">
@@ -70,7 +54,7 @@
 
           <div class="form-group">
             <label for="dateTime">Выберите дату и время:</label>
-            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required />
+            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required>
           </div>
 
           <div class="text-center">
@@ -91,13 +75,12 @@
             <option value="ALL">Все</option>
           </select>
         </div>
-        <table id="BookingTable" class="table table-striped table-light mb3">
+        <table id="BookingTable" class="table table-hover table-striped table-light mb3">
           <thead>
             <tr>
               <th>№</th>
-              <th>Парикмахер</th>
-              <th>Пользователь</th>
               <th>Услуга</th>
+              <th>Парикмахер</th>
               <th>Время</th>
               <th>Действия</th>
             </tr>
@@ -107,6 +90,7 @@
       </div>
     </div>
   </main>
+
 
   <div class="modal fade" id="editBookingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="editBookingModalLabel" aria-hidden="true">
@@ -118,6 +102,7 @@
         </div>
 
         <div class="modal-body">
+
           <form id="editBookingForm">
             <input type="hidden" id="editBookingId" class="col-form-label" name="bookingId" />
             <div class="form-group">
@@ -126,19 +111,15 @@
             </div>
 
             <div class="form-group">
-              <label for="editUser">Выберите пользователя:</label>
-              <select class="form-control" id="editUser" name="userId" required></select>
-            </div>
-
-            <div class="form-group">
               <label for="editService">Выберите услугу:</label>
               <select class="form-control" id="editService" name="serviceId" required></select>
             </div>
 
             <div class="form-group">
-              <label for="editDateTime">Выберите дату и время:</label>
-              <input type="datetime-local" class="form-control" id="editDateTime" name="editDateTime" required />
+              <label for="dateTime">Выберите дату и время:</label>
+              <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required>
             </div>
+
           </form>
         </div>
 
@@ -154,23 +135,35 @@
     </div>
   </div>
 
-  <div id="deleteBookingModal" class="modal" tabindex="-1">
+  <div id="declineBookingModal" class="modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
-          <p>Вы уверены, что хотите удалить этот заказ?</p>
+          <p class="mb-0">Вы уверены, что хотите отменить этот заказ?</p>
+          <form id="declineBookingForm">
+
+            <input type="hidden" id="declineBookingId" class="col-form-label" />
+
+            <input type="hidden" id="declineBarber" class="col-form-label" />
+
+            <input type="hidden" id="declineService" class="col-form-label" />
+
+            <input type="hidden" id="declineDateTime" class="col-form-label" />
+
+          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" id="confirmDeleteBooking" class="btn btn-outline-danger" data-bs-dismiss="modal">
+          <button type="button" id="confirmDeclineBooking" class="btn btn-outline-danger" data-bs-dismiss="modal">
             Да
           </button>
-          <button type="button" id="cancelDeleteBooking" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-            Отмена
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Нет
           </button>
         </div>
       </div>
     </div>
   </div>
+
 
   <footer class="text-center mt-4 fixed-bottom">
     Шерлок Холмс раскрывал некоторые дела "за одну выкуренную трубку", это
@@ -180,8 +173,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
-  <script src="bookings.js"></script>
-  <script src="filterUsersByRole.js"></script>
+  <script src="../js/client-bookings.js"></script>
+  <script src="../js/filterUsersByRole.js"></script>
+
 </body>
 
 </html>
