@@ -2,6 +2,8 @@ package bsuir.coursework.HairSalon.services;
 
 import bsuir.coursework.HairSalon.models.Booking;
 import bsuir.coursework.HairSalon.repositories.BookingRepository;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -67,5 +69,12 @@ public class BookingService {
 
   public List<Booking> getBookingsByUser(int userId) {
     return bookingRepository.findByUser_Id(userId);
+  }
+
+  public boolean isBarberAvailable(int barberId, LocalDateTime dateTime) {
+    LocalDateTime startTime = dateTime.minusMinutes(5);
+    LocalDateTime endTime = dateTime.plusMinutes(5);
+
+    return !bookingRepository.existsByBarberIdAndDateTimeBetween(barberId, startTime, endTime);
   }
 }

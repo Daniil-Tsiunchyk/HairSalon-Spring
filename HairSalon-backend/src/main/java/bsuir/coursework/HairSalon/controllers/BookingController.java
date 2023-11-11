@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -189,5 +191,24 @@ public class BookingController {
       .map(BookingDTO::new)
       .collect(Collectors.toList());
     return ResponseEntity.ok(bookingDTOs);
+  }
+
+  @Operation(
+          summary = "Check if a barber is available at a specified date and time",
+          description = "Endpoint to check if a barber is available at a specified date and time",
+          responses = {
+                  @ApiResponse(
+                          responseCode = "200",
+                          description = "Barber availability status"
+                  ),
+          }
+  )
+  @GetMapping("/checkAvailability/{barberId}/{dateTime}")
+  public ResponseEntity<Boolean> checkBarberAvailability(
+          @PathVariable @Parameter(description = "ID of the barber") int barberId,
+          @PathVariable @Parameter(description = "Date and time to check availability") LocalDateTime dateTime
+  ) {
+    boolean isAvailable = bookingService.isBarberAvailable(barberId, dateTime);
+    return ResponseEntity.ok(isAvailable);
   }
 }

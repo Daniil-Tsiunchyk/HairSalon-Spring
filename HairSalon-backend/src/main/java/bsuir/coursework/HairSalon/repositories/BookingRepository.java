@@ -1,6 +1,8 @@
 package bsuir.coursework.HairSalon.repositories;
 
 import bsuir.coursework.HairSalon.models.Booking;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +21,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     Date dateTime,
     Booking.ServiceStatus status
   );
+
+  boolean existsByBarberIdAndDateTimeBetween(int barberId, LocalDateTime startTime, LocalDateTime endTime);
 }
