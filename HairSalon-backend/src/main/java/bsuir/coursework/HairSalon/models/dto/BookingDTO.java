@@ -15,6 +15,7 @@ public class BookingDTO {
   private String hairServiceName;
   private Double hairServiceCost;
   private Integer barberId;
+  private Integer location;
   private String barber;
   private LocalDateTime dateTime;
   private Booking.ServiceStatus status;
@@ -27,6 +28,7 @@ public class BookingDTO {
     this.serviceId = booking.getHairService().getId();
     this.hairServiceName = booking.getHairService().getName();
     this.hairServiceCost = booking.getHairService().getCost();
+    this.location = booking.getLocation().getId();
     this.barberId = booking.getBarber().getId();
     this.barber =
       booking.getBarber().getFirstName() + " " + booking.getBarber().getLastName();

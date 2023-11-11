@@ -37,6 +37,11 @@ public class Booking {
   @Schema(description = "User representing the barber")
   private User barber;
 
+  @ManyToOne
+  @JoinColumn(name = "location_id")
+  @Schema(description = "Location associated with the booking")
+  private Location location;
+
   @Column(name = "date_time", nullable = false)
   @Temporal(TemporalType.TIMESTAMP)
   @Schema(
