@@ -23,4 +23,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
   );
 
   boolean existsByBarberIdAndDateTimeBetween(int barberId, LocalDateTime startTime, LocalDateTime endTime);
+
+  List<Booking> findByBarberId(int barberId);
 }

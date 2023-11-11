@@ -211,4 +211,22 @@ public class BookingController {
     boolean isAvailable = bookingService.isBarberAvailable(barberId, dateTime);
     return ResponseEntity.ok(isAvailable);
   }
+
+  @Operation(
+          summary = "Get all bookings for a specific barber",
+          description = "Endpoint to get all bookings for a specific barber",
+          responses = {
+                  @ApiResponse(
+                          responseCode = "200",
+                          description = "List of bookings for the barber"
+                  ),
+          }
+  )
+  @GetMapping("/barber/{barberId}")
+  public ResponseEntity<List<Booking>> getBookingsForBarber(
+          @PathVariable @Parameter(description = "ID of the barber") int barberId
+  ) {
+    List<Booking> barberBookings = bookingService.getBookingsForBarber(barberId);
+    return ResponseEntity.ok(barberBookings);
+  }
 }

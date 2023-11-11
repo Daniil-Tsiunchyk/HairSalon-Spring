@@ -77,4 +77,8 @@ public class BookingService {
 
     return !bookingRepository.existsByBarberIdAndDateTimeBetween(barberId, startTime, endTime);
   }
+
+  public List<Booking> getBookingsForBarber(int barberId) {
+    return bookingRepository.findByBarberId(barberId);
+  }
 }
