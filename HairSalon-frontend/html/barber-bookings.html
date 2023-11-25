@@ -24,6 +24,9 @@
               <a class="nav-link active" href="barber-bookings.html">Ваши заказы</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="barber-shops.html">Наши парикмахерские</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="barber-settings.html">Настройки</a>
             </li>
           </ul>
@@ -47,6 +50,16 @@
           <div class="form-group">
             <label for="serviceSelect">Выберите услугу:</label>
             <select class="form-control" id="serviceSelect" name="serviceId" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="locationSelect">Выберите адрес:</label>
+            <select class="form-control" id="locationSelect" name="locationId" required>
+              <option value="1">Ваупшасова 29</option>
+              <option value="2">Партизанский проспект 8</option>
+              <option value="3">Смоленская 15А</option>
+              <option value="4">Бехтерева 5</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -87,6 +100,7 @@
               <th>№</th>
               <th>Услуга</th>
               <th>Клиент</th>
+              <th>Адрес</th>
               <th>Время</th>
               <th>Действия</th>
             </tr>
@@ -112,13 +126,23 @@
           <form id="editBookingForm">
             <input type="hidden" id="editBookingId" class="col-form-label" name="bookingId" />
             <div class="form-group">
-              <label for="editclient">Выберите клиента:</label>
+              <label for="editClient">Выберите клиента:</label>
               <select class="form-control" id="editClient" name="clientId" required></select>
             </div>
 
             <div class="form-group">
               <label for="editService">Выберите услугу:</label>
               <select class="form-control" id="editService" name="serviceId" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="editLocation">Выберите адрес:</label>
+              <select class="form-control" id="editLocation" name="locationId" required>
+                <option value="1">Ваупшасова 29</option>
+                <option value="2">Партизанский проспект 8</option>
+                <option value="3">Смоленская 15А</option>
+                <option value="4">Бехтерева 5</option>
+              </select>
             </div>
 
             <div class="form-group">

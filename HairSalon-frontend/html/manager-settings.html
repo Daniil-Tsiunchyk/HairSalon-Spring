@@ -39,6 +39,9 @@
               <a class="nav-link" href="spam.html">Спам-рассылка</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="shops.html">Наши парикмахерские</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" href="manager-settings.html">Настройки</a>
             </li>
           </ul>
@@ -55,6 +58,7 @@
 
     <form id="editUserForm">
       <input type="hidden" id="editUserId" class="col-form-label" name="userId" />
+      
       <div class="form-group">
         <label for="editUserUsername">Имя пользователя:</label>
         <input type="text" class="form-control" id="editUserUsername" name="username" required />
@@ -83,7 +87,7 @@
 
       <div class="form-group">
         <label>Статус:</label>
-        <select id="editUserRole" class="form-select" aria-label="Default select example">
+        <select id="editUserRole" class="form-select" aria-label="Default select example" disabled="true">
           <option value="USER">Пользователь</option>
           <option value="BARBER">Парикмахер</option>
           <option value="MANAGER">Менеджер</option>

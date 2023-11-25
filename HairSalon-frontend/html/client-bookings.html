@@ -27,6 +27,9 @@
               <a class="nav-link active" href="client-bookings.html">Ваши заказы</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="client-shops.html">Наши парикмахерские</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="client-settings.html">Настройки</a>
             </li>
           </ul>
@@ -50,6 +53,16 @@
           <div class="form-group">
             <label for="serviceSelect">Выберите услугу:</label>
             <select class="form-control" id="serviceSelect" name="serviceId" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="locationSelect">Выберите адрес:</label>
+            <select class="form-control" id="locationSelect" name="locationId" required>
+              <option value="1">Ваупшасова 29</option>
+              <option value="2">Партизанский проспект 8</option>
+              <option value="3">Смоленская 15А</option>
+              <option value="4">Бехтерева 5</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -81,6 +94,7 @@
               <th>№</th>
               <th>Услуга</th>
               <th>Парикмахер</th>
+              <th>Адрес</th>
               <th>Время</th>
               <th>Действия</th>
             </tr>
@@ -116,6 +130,16 @@
             </div>
 
             <div class="form-group">
+              <label for="editLocation">Выберите адрес:</label>
+              <select class="form-control" id="editLocation" name="locationId" required>
+                <option value="1">Ваупшасова 29</option>
+                <option value="2">Партизанский проспект 8</option>
+                <option value="3">Смоленская 15А</option>
+                <option value="4">Бехтерева 5</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="dateTime">Выберите дату и время:</label>
               <input type="datetime-local" class="form-control" id="dateTime" name="dateTime" required>
             </div>
@@ -145,6 +169,8 @@
             <input type="hidden" id="declineBookingId" class="col-form-label" />
 
             <input type="hidden" id="declineBarber" class="col-form-label" />
+
+            <input type="hidden" id="declineLocation" class="col-form-label" />
 
             <input type="hidden" id="declineService" class="col-form-label" />
 

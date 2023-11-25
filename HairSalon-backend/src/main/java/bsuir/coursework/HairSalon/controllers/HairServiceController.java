@@ -82,15 +82,7 @@ public class HairServiceController {
   )
   @PostMapping
   public ResponseEntity<HairService> createHairService(
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = HairService.class),
-        examples = @ExampleObject(
-          value = "{\"name\": \"Haircut\", \"cost\": 25.0}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "Hair service data to create"
     ) HairService hairService
   ) {
@@ -117,15 +109,7 @@ public class HairServiceController {
   @PutMapping("/{id}")
   public ResponseEntity<HairService> updateHairService(
     @PathVariable @Parameter(description = "ID of the hair service") int id,
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = HairService.class),
-        examples = @ExampleObject(
-          value = "{\"name\": \"Haircut\", \"cost\": 25.0}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "Updated hair service data"
     ) HairService updatedHairService
   ) {

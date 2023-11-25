@@ -6,6 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error(error));
     }
 
+    function filterBookingsByStatus(data) {
+        return data.filter((Booking) => Booking.status === "CONFIRMED");
+    }
+
     function calculateStatistics() {
         let totalOrders = 0;
         let totalAmount = 0;
@@ -14,29 +18,30 @@ document.addEventListener("DOMContentLoaded", function () {
         const salesData = {};
 
         fetchAPI("bookings", bookings => {
-            totalOrders = bookings.length;
+            const filteredBookings = filterBookingsByStatus(bookings)
+            totalOrders = filteredBookings.length;
 
-            for (const booking of bookings) {
-                totalAmount += booking.hairServiceCost;
+            for (const filteredBooking of filteredBookings) {
+                totalAmount += filteredBooking.hairServiceCost;
 
-                if (booking.hairServiceName in serviceStats) {
-                    serviceStats[booking.hairServiceName]++;
+                if (filteredBooking.hairServiceName in serviceStats) {
+                    serviceStats[filteredBooking.hairServiceName]++;
                 } else {
-                    serviceStats[booking.hairServiceName] = 1;
+                    serviceStats[filteredBooking.hairServiceName] = 1;
                 }
 
-                if (booking.barber in barberStats) {
-                    barberStats[booking.barber]++;
+                if (filteredBooking.barber in barberStats) {
+                    barberStats[filteredBooking.barber]++;
                 } else {
-                    barberStats[booking.barber] = 1;
+                    barberStats[filteredBooking.barber] = 1;
                 }
 
-                const date = moment(booking.dateTime);
+                const date = moment(filteredBooking.dateTime);
                 const day = date.format('YYYY-MM-DD');
                 if (salesData[day]) {
-                    salesData[day] += booking.hairServiceCost;
+                    salesData[day] += filteredBooking.hairServiceCost;
                 } else {
-                    salesData[day] = booking.hairServiceCost;
+                    salesData[day] = filteredBooking.hairServiceCost;
                 }
             }
 
@@ -65,11 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
             new Chart(salesChart, {
                 type: 'line',
                 data: {
-                    labels: salesDates,
-                    datasets: [{
+                    labels: salesDates, datasets: [{
                         label: 'Продажи',
-                        data: salesValues,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        data: salesValues, backgroundColor: 'rgba(75, 192, 192, 0.2)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
@@ -103,6 +106,5 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-
     calculateStatistics();
 });

@@ -10,6 +10,7 @@ function updateEditUser(userId) {
             document.getElementById("editUserFirstName").value = userData.firstName;
             document.getElementById("editUserLastName").value = userData.lastName;
             document.getElementById("editUserRole").value = userData.role;
+            document.getElementById("userDiscount").value = userData.role;
         });
 
     submitEditButton.onclick = function () {
@@ -41,4 +42,4 @@ function updateEditUser(userId) {
     }
 }
 
-updateEditUser(1);
+updateEditUser(15);

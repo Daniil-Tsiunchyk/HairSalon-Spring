@@ -73,15 +73,7 @@ public class LocationController {
     )
     @PostMapping
     public ResponseEntity<Location> createLocation(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = Location.class),
-                            examples = @ExampleObject(
-                                    value = "{\"latitude\": 12.34, \"longitude\": 56.78}"
-                            )
-                    )
-            ) @RequestBody @Parameter(
+            @RequestBody @Parameter(
                     description = "Location data to create"
             ) Location location
     ) {

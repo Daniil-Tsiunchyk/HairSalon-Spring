@@ -106,15 +106,7 @@ public class BookingController {
   )
   @PostMapping
   public ResponseEntity<BookingDTO> createBooking(
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = Booking.class),
-        examples = @ExampleObject(
-          value = "{\"user\": {\"id\": 1}, \"hairService\": {\"id\": 1}, \"barber\": {\"id\": 2}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "Booking data to create"
     ) Booking booking
   ) {
@@ -138,15 +130,7 @@ public class BookingController {
   @PutMapping("/{id}")
   public ResponseEntity<BookingDTO> updateBooking(
     @PathVariable @Parameter(description = "ID of the booking") int id,
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = Booking.class),
-        examples = @ExampleObject(
-          value = "{\"user\": {\"id\": 1}, \"hairService\": {\"id\": 1}, \"barber\": {\"id\": 2}, \"dateTime\": \"2023-10-19T14:30:00Z\", \"status\": \"RESERVED\"}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "Updated booking data"
     ) Booking updatedBooking
   ) {
@@ -223,10 +207,14 @@ public class BookingController {
           }
   )
   @GetMapping("/barber/{barberId}")
-  public ResponseEntity<List<Booking>> getBookingsForBarber(
+  public ResponseEntity<List<BookingDTO>> getBookingsForBarber(
           @PathVariable @Parameter(description = "ID of the barber") int barberId
   ) {
-    List<Booking> barberBookings = bookingService.getBookingsForBarber(barberId);
-    return ResponseEntity.ok(barberBookings);
+    List<Booking> bookings = bookingService.getBookingsForBarber(barberId);
+    List<BookingDTO> bookingDTOs = bookings
+            .stream()
+            .map(BookingDTO::new)
+            .collect(Collectors.toList());
+    return ResponseEntity.ok(bookingDTOs);
   }
 }

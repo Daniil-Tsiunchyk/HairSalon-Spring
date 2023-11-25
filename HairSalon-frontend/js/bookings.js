@@ -10,6 +10,13 @@ function updateBookingTable() {
                 let i = 0;
                 filteredData.forEach((booking) => {
                     const row = document.createElement("tr");
+                    let locationName;
+                    switch(booking.location){
+                        case 1: locationName = "Ваупшасова 29"; break;
+                        case 2: locationName = "Партизанский пр. 8"; break;
+                        case 3: locationName = "Смоленская 15А"; break;
+                        case 4: locationName = "Бехтерева 5"; break;
+                    }
                     i++;
 
                     row.innerHTML = `
@@ -17,6 +24,7 @@ function updateBookingTable() {
               <td>${booking.barber}</td>
               <td>${booking.client}</td>
               <td>${booking.hairServiceName}</td>
+              <td>${locationName}</td>
               <td>${formatDateTime(booking.dateTime)}</td>
               <td>
                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editBookingModal" data-bs-whatever="@getbootstrap" onclick="showEditBooking(${booking.id})">Редактировать</button>
@@ -45,12 +53,10 @@ function filterBookingsByStatus(data, status) {
 
 
 function loadUsersIntoSelects() {
-    console.log("Запрос на получение списка пользователей...");
     fetch("http://localhost:8080/api/users")
         .then((response) => response.json())
         .then((data) => {
             const filteredData = filterUsersByRole(data, "USER");
-            console.log("Данные о пользователях получены:", filteredData);
 
             const userSelect = document.getElementById("userSelect");
             const editUser = document.getElementById("editUser");
@@ -76,12 +82,10 @@ function loadUsersIntoSelects() {
 }
 
 function loadBarbersIntoSelects() {
-    console.log("Запрос на получение списка парикмахеров...");
     fetch("http://localhost:8080/api/users")
         .then((response) => response.json())
         .then((data) => {
             const filteredData = filterUsersByRole(data, "BARBER");
-            console.log("Данные о парикмахерах получены:", filteredData);
 
             const barberSelect = document.getElementById("barberSelect");
             const editBarber = document.getElementById("editBarber");
@@ -107,11 +111,9 @@ function loadBarbersIntoSelects() {
 }
 
 function loadServiceIntoSelects() {
-    console.log("Запрос на получение списка услуг...");
     fetch("http://localhost:8080/api/hair-services")
         .then((response) => response.json())
         .then((data) => {
-            console.log("Данные об услугах получены:", data);
 
             const serviceSelect = document.getElementById("serviceSelect");
             const editService = document.getElementById("editService");
@@ -143,6 +145,7 @@ document
         const barberID = parseInt(document.getElementById("barberSelect").value);
         const userId = parseInt(document.getElementById("userSelect").value);
         const serviceId = parseInt(document.getElementById("serviceSelect").value);
+        const location = parseInt(document.getElementById("locationSelect").value);
         const dateTime = document.getElementById("dateTime").value;
 
         if (checkBookingAvailability(barberID, dateTime)) {
@@ -151,7 +154,7 @@ document
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: dateTime, status: "RESERVED" })
+                body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, location: { id: location }, dateTime: dateTime, status: "RESERVED" })
 
             }).then((response) => {
                 if (response.status === 201) {
@@ -159,7 +162,6 @@ document
                 }
             });
             document.getElementById("dateTime").value = "";
-
             alert("Успешное бронирование");
         } else {
             alert("Выбранное время занято. Пожалуйста, выберите другое время.");
@@ -168,15 +170,14 @@ document
 
 function showEditBooking(BookingId) {
     const modal = document.getElementById("editBookingModal");
-    console.log(BookingId);
     fetch(`http://localhost:8080/api/bookings/${BookingId}`)
         .then((response) => response.json())
         .then((BookingData) => {
-            console.log(BookingData);
             document.getElementById("editBookingId").value = BookingData.id;
             document.getElementById("editBarber").value = BookingData.barberID;
             document.getElementById("editUser").value = BookingData.userId;
             document.getElementById("editService").value = BookingData.serviceId;
+            document.getElementById("editLocation").value = BookingData.location;
             document.getElementById("editDateTime").value = BookingData.DateTime;
         });
 
@@ -185,22 +186,22 @@ function showEditBooking(BookingId) {
         const barberID = parseInt(document.getElementById("editBarber").value);
         const userId = parseInt(document.getElementById("editUser").value);
         const serviceId = parseInt(document.getElementById("editService").value);
+        const location = parseInt(document.getElementById("editLocation").value);
         const editDateTime = document.getElementById("editDateTime").value;
-        console.log(JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: editDateTime, status: "RESERVED" }),
-        )
+        const editStatus = document.getElementById("editBookingStatus").value;
 
-        editBooking(BookingId, userId, serviceId, barberID, editDateTime)
+        editBooking(BookingId, userId, serviceId, barberID, location, editDateTime, editStatus)
     }
     modal.style.display = "block";
 }
 
-function editBooking(BookingId, userId, serviceId, barberID, editDateTime) {
+function editBooking(BookingId, userId, serviceId, barberID, location, editDateTime, editStatus) {
     fetch(`http://localhost:8080/api/bookings/${BookingId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: editDateTime, status: "RESERVED" }),
+        body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, location: { id: location }, dateTime: editDateTime, status: editStatus }),
     }).then((response) => {
         if (response.status === 200) {
             const modal = document.getElementById("editBookingModal");
@@ -239,8 +240,7 @@ function deleteBooking(BookingId) {
 
 function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    const formattedDate = `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-    return formattedDate;
+    return `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
 }
 
 function checkBookingAvailability(barberId, dateTime) {

@@ -106,15 +106,7 @@ public class DiscountCardController {
   @PutMapping("/{id}")
   public ResponseEntity<DiscountCardDTO> updateDiscountCard(
     @PathVariable @Parameter(description = "ID of the discount card") int id,
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = DiscountCard.class),
-        examples = @ExampleObject(
-          value = "{\"discountPercentage\": 10.0, \"user\": {\"id\": 1}}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "Updated discount card data"
     ) DiscountCard updatedDiscountCard
   ) {

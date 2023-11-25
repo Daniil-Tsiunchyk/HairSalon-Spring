@@ -77,15 +77,7 @@ public class UserController {
   @PutMapping("/{id}")
   public ResponseEntity<User> updateUser(
     @PathVariable @Parameter(description = "ID of the user") int id,
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = User.class),
-        examples = @ExampleObject(
-          value = "{\"username\": \"john_doe\", \"email\": \"john.doe@example.com\", \"password\": \"password123\", \"firstName\": \"Daniil\", \"lastName\": \"Makarov\", \"bookings\": [1, 2, 3], \"role\": \"USER\"}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "Updated user data"
     ) User updatedUser
   ) throws NoSuchAlgorithmException {
@@ -132,15 +124,7 @@ public class UserController {
   )
   @PostMapping("/register")
   public ResponseEntity<User> registerUser(
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = User.class),
-        examples = @ExampleObject(
-          value = "{\"username\": \"john_doe\", \"email\": \"john.doe@example.com\", \"password\": \"password123\"}"
-        )
-      )
-    ) @RequestBody @Parameter(
+    @RequestBody @Parameter(
       description = "User data for registration"
     ) User user
   ) throws NoSuchAlgorithmException {
@@ -172,15 +156,7 @@ public class UserController {
   )
   @PostMapping("/login")
   public ResponseEntity<User> loginUser(
-    @io.swagger.v3.oas.annotations.parameters.RequestBody(
-      content = @Content(
-        mediaType = "application/json",
-        schema = @Schema(implementation = User.class),
-        examples = @ExampleObject(
-          value = "{\"username\": \"john_doe\", \"password\": \"password123\"}"
-        )
-      )
-    ) @RequestBody @Parameter(description = "User data for login") User user
+    @RequestBody @Parameter(description = "User data for login") User user
   ) throws NoSuchAlgorithmException {
     User existingUser = userService.findByUsername(user.getUsername());
     if (existingUser != null) {

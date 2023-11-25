@@ -56,6 +56,7 @@ public class BookingService {
       booking.setBarber(updatedBooking.getBarber());
       booking.setHairService(updatedBooking.getHairService());
       booking.setDateTime(updatedBooking.getDateTime());
+      booking.setLocation(updatedBooking.getLocation());
       booking.setStatus(updatedBooking.getStatus());
       return bookingRepository.save(booking);
     } else {
@@ -73,7 +74,7 @@ public class BookingService {
 
   public boolean isBarberAvailable(int barberId, LocalDateTime dateTime) {
     LocalDateTime startTime = dateTime.minusMinutes(5);
-    LocalDateTime endTime = dateTime.plusMinutes(5);
+    LocalDateTime endTime = dateTime.plusMinutes(20);
 
     return !bookingRepository.existsByBarberIdAndDateTimeBetween(barberId, startTime, endTime);
   }

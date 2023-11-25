@@ -38,7 +38,7 @@ public class Booking {
   private User barber;
 
   @ManyToOne
-  @JoinColumn(name = "location_id")
+  @JoinColumn(name = "location_id", nullable = true)
   @Schema(description = "Location associated with the booking")
   private Location location;
 

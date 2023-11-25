@@ -39,6 +39,9 @@
               <a class="nav-link" href="spam.html">Спам-рассылка</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="shops.html">Наши парикмахерские</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="manager-settings.html">Настройки</a>
             </li>
           </ul>
@@ -66,6 +69,16 @@
           <div class="form-group">
             <label for="serviceSelect">Выберите услугу:</label>
             <select class="form-control" id="serviceSelect" name="serviceId" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="locationSelect">Выберите адрес:</label>
+            <select class="form-control" id="locationSelect" name="locationId" required>
+              <option value="1">Ваупшасова 29</option>
+              <option value="2">Партизанский проспект 8</option>
+              <option value="3">Смоленская 15А</option>
+              <option value="4">Бехтерева 5</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -98,6 +111,7 @@
               <th>Парикмахер</th>
               <th>Пользователь</th>
               <th>Услуга</th>
+              <th>Адрес</th>
               <th>Время</th>
               <th>Действия</th>
             </tr>
@@ -136,9 +150,29 @@
             </div>
 
             <div class="form-group">
+              <label for="editLocation">Выберите адрес:</label>
+              <select class="form-control" id="editLocation" name="locationId" required>
+                <option value="1">Ваупшасова 29</option>
+                <option value="2">Партизанский проспект 8</option>
+                <option value="3">Смоленская 15А</option>
+                <option value="4">Бехтерева 5</option>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="editDateTime">Выберите дату и время:</label>
               <input type="datetime-local" class="form-control" id="editDateTime" name="editDateTime" required />
             </div>
+
+            <div class="mt-4">
+              <label>Выберите статус:</label>
+              <select id="editBookingStatus" class="form-select" aria-label="Default select example">
+                <option value="RESERVED">Активный</option>
+                <option value="CANCELLED">Отменён</option>
+                <option value="CONFIRMED">Выполнен</option>
+              </select>
+            </div>
+
           </form>
         </div>
 
