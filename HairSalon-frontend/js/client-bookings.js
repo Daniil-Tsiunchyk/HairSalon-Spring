@@ -1,6 +1,6 @@
 function updateBookingTable() {
     const BookingStatus = document.getElementById("BookingStatus").value;
-    fetch("http://localhost:8080/api/bookings/user/15")
+    fetch("http://localhost:8080/api/bookings/user/" + getCookieValue("id"))
         .then((response) => response.json())
         .then(
             (data) => {
@@ -123,7 +123,7 @@ document
     .addEventListener("submit", function (event) {
         event.preventDefault();
         const barberID = parseInt(document.getElementById("barberSelect").value);
-        const userId = 15;
+        const userId = getCookieValue("id");
         const location = parseInt(document.getElementById("locationSelect").value);
         const serviceId = parseInt(document.getElementById("serviceSelect").value);
         const dateTime = document.getElementById("dateTime").value;
@@ -159,16 +159,16 @@ function showEditBooking(BookingId) {
             document.getElementById("editService").value = BookingData.serviceId;
             console.log(BookingData.location);
             document.getElementById("editLocation").value = BookingData.location;
-            document.getElementById("dateTime").value = BookingData.dateTime;
+            document.getElementById("editDateTime").value = BookingData.dateTime;
         });
 
     submitEditButton.onclick = function () {
         const BookingId = parseInt(document.getElementById("editBookingId").value);
         const barberID = parseInt(document.getElementById("editBarber").value);
-        const userId = 15;
+        const userId = getCookieValue("id");
         const serviceId = parseInt(document.getElementById("editService").value);
         const location = parseInt(document.getElementById("editLocation").value);
-        const editDateTime = document.getElementById("dateTime").value;
+        const editDateTime = document.getElementById("editDateTime").value;
 
         editBooking(BookingId, userId, serviceId, barberID, location, editDateTime);
     }
@@ -189,10 +189,10 @@ function editBooking(BookingId, userId, serviceId, barberID, location, editDateT
             updateBookingTable();
         }
     });
-};
+}
 
 function showDeclineBookingModal(BookingId) {
-    const modal = document.getElementById("declineBookingModal");
+    document.getElementById("declineBookingModal");
     const confirmButton = document.getElementById("confirmDeclineBooking");
 
     fetch(`http://localhost:8080/api/bookings/${BookingId}`)
@@ -208,7 +208,7 @@ function showDeclineBookingModal(BookingId) {
     confirmButton.onclick = function () {
         const BookingId = parseInt(document.getElementById("declineBookingId").value);
         const barberID = parseInt(document.getElementById("declineBarber").value);
-        const userId = 15;
+        const userId = getCookieValue("id");
         const location = parseInt(document.getElementById("declineLocation").value);
         const serviceId = parseInt(document.getElementById("declineService").value);
         const DateTime = document.getElementById("declineDateTime").value;
@@ -232,8 +232,7 @@ function declineBooking(BookingId, userId, serviceId, barberID, location, DateTi
 
 function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    const formattedDate = `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-    return formattedDate;
+    return `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
 }
 
 function checkBookingAvailability(barberId, dateTime) {

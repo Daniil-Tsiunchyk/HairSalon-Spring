@@ -209,7 +209,7 @@ function editBooking(BookingId, userId, serviceId, barberID, location, editDateT
             updateBookingTable();
         }
     });
-};
+}
 
 function showDeleteBookingModal(BookingId) {
     const modal = document.getElementById("deleteBookingModal");

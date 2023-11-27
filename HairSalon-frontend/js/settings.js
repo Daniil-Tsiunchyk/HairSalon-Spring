@@ -42,4 +42,4 @@ function updateEditUser(userId) {
     }
 }
 
-updateEditUser(15);
+updateEditUser(getCookieValue("id"));

@@ -13,9 +13,22 @@ document
       body: JSON.stringify({ username, password }),
     }).then((response) => {
       if (response.status === 200) {
-        document.getElementById("loginMessage").textContent =
-          "Авторизация успешна.";
-        window.location.href = "users.html";
+        response.json().then((data) => {
+
+          document.cookie = `id=${data.id}; path=/`;
+          document.cookie = `role=${data.role}; path=/`;
+
+          if (data.role === "USER") {
+            window.location.href = "client-bookings.html";
+          } else if (data.role === "BARBER") {
+            window.location.href = "barber-bookings.html";
+          } else if (data.role === "MANAGER") {
+            window.location.href = "bookings.html";
+          }
+
+          document.getElementById("loginMessage").textContent =
+            "Авторизация успешна.";
+        });
       } else {
         document.getElementById("loginMessage").textContent =
           "Ошибка авторизации.";

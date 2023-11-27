@@ -1,7 +1,7 @@
 function updateBookingTable() {
     const BookingStatus = document.getElementById("BookingStatus").value;
     const time = document.getElementById("BookingTimeStatus").value;
-    fetch("http://localhost:8080/api/bookings/barber/15")
+    fetch("http://localhost:8080/api/bookings/barber/" + getCookieValue("id"))
         .then((response) => response.json())
         .then(
             (data) => {
@@ -46,8 +46,9 @@ BookingStatusSelect.addEventListener("change", () => {
 
 function filterBookingsByTime(data, time) {
     switch (time) {
-        case "ALL": return data; break;
-        case "DAY": now = new dateTime(); return data.filter((Booking) => getDate(Booking.dateTime) === getDate(now)); break;
+        case "ALL": return data;
+        case "DAY":
+            let now = new dateTime(); return data.filter((Booking) => getDate(Booking.dateTime) === getDate(now));
     }
 }
 
@@ -123,7 +124,7 @@ document
     .getElementById("createBookingForm")
     .addEventListener("submit", function (event) {
         event.preventDefault();
-        const barberID = 15;
+        const barberID = getCookieValue("id");
         const userId = parseInt(document.getElementById("clientSelect").value);
         const serviceId = parseInt(document.getElementById("serviceSelect").value);
         const location = parseInt(document.getElementById("locationSelect").value);
@@ -159,16 +160,17 @@ function showEditBooking(BookingId) {
             document.getElementById("editClient").value = BookingData.clientId;
             document.getElementById("editService").value = BookingData.serviceId;
             document.getElementById("editLocation").value = BookingData.location;
-            document.getElementById("dateTime").value = BookingData.dateTime;
+            document.getElementById("editDateTime").value = BookingData.dateTime;
         });
 
+    let submitEditButton;
     submitEditButton.onclick = function () {
         const BookingId = parseInt(document.getElementById("editBookingId").value);
-        const barberID = 15;
+        const barberID = getCookieValue("id");
         const userId = parseInt(document.getElementById("editClient").value);
         const serviceId = parseInt(document.getElementById("editService").value);
         const location = parseInt(document.getElementById("editLocation").value);
-        const editDateTime = document.getElementById("dateTime").value;
+        const editDateTime = document.getElementById("editDateTime").value;
 
         editBooking(BookingId, userId, serviceId, barberID, location, editDateTime);
     }
@@ -189,7 +191,7 @@ function editBooking(BookingId, userId, serviceId, barberID, location, editDateT
             updateBookingTable();
         }
     });
-};
+}
 
 function showDeclineBookingModal(BookingId) {
     const confirmButton = document.getElementById("confirmDeclineBooking");
@@ -200,26 +202,28 @@ function showDeclineBookingModal(BookingId) {
             document.getElementById("declineBookingId").value = BookingData.id;
             document.getElementById("declineClient").value = BookingData.clientId;
             document.getElementById("declineService").value = BookingData.serviceId;
+            document.getElementById("declineLocation").value = BookingData.location;
             document.getElementById("declineDateTime").value = BookingData.dateTime;
         });
 
     confirmButton.onclick = function () {
         const BookingId = parseInt(document.getElementById("declineBookingId").value);
-        const barberID = 15;
+        const barberID = getCookieValue("id");
         const userId = parseInt(document.getElementById("declineClient").value);
+        const location = parseInt(document.getElementById("declineLocation").value);
         const serviceId = parseInt(document.getElementById("declineService").value);
         const DateTime = document.getElementById("declineDateTime").value;
-        declineBooking(BookingId, userId, serviceId, barberID, DateTime);
+        declineBooking(BookingId, userId, serviceId, barberID, location, DateTime);
     };
 }
 
-function declineBooking(BookingId, userId, serviceId, barberID, DateTime) {
+function declineBooking(BookingId, userId, serviceId, barberID, location, DateTime) {
     fetch(`http://localhost:8080/api/bookings/${BookingId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, dateTime: DateTime, status: "CANCELLED" }),
+        body: JSON.stringify({ user: { id: userId }, hairService: { id: serviceId }, barber: { id: barberID }, location: { id: location }, dateTime: DateTime, status: "CANCELLED" }),
     }).then((response) => {
         if (response.status === 200) {
             updateBookingTable();
