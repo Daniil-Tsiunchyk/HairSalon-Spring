@@ -63,7 +63,6 @@ document
   });
 
 function editService(serviceId) {
-
   const modal = document.getElementById("editServiceModal");
 
   fetch(`http://localhost:8080/api/hair-services/${serviceId}`)
@@ -85,7 +84,6 @@ function editService(serviceId) {
       cost = 0;
     }
 
-
     fetch(`http://localhost:8080/api/hair-services/${serviceId}`, {
       method: "PUT",
       headers: {
@@ -99,8 +97,6 @@ function editService(serviceId) {
       }
     });
   };
-
-
 
   modal.style.display = "block";
 }

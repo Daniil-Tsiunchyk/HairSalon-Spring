@@ -14,7 +14,6 @@ document
     }).then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
-
           document.cookie = `id=${data.id}; path=/`;
           document.cookie = `role=${data.role}; path=/`;
 

@@ -41,23 +41,30 @@ document
     const firstName = document.getElementById("createFirstName").value;
     const lastName = document.getElementById("createLastName").value;
     const role = document.getElementById("SelectUserRole").value;
-    console.log(role)
+    console.log(role);
 
-    fetch("http://localhost:8080/api/users/register", {
+    fetch("http://localhost:8080/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, email, password, firstName, lastName, role }),
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        role,
+      }),
     }).then((response) => {
       if (response.status === 201) {
+        console.log(role);
         updateTable();
         document.getElementById("createUsername").value = "";
         document.getElementById("createPassword").value = "";
         document.getElementById("createFirstName").value = "";
         document.getElementById("createLastName").value = "";
         document.getElementById("createEmail").value = "";
-        document.getElementById("SelectUserRole").value = "USER";
       }
     });
   });
@@ -89,18 +96,31 @@ function showEditUserModal(userId) {
     editUser(userId, username, password, email, firstName, lastName, role);
   };
 
-
   modal.style.display = "block";
 }
 
-
-function editUser(userId, username, password, email, firstName, lastName, role) {
+function editUser(
+  userId,
+  username,
+  password,
+  email,
+  firstName,
+  lastName,
+  role
+) {
   fetch(`http://localhost:8080/api/users/${userId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username, email, password, firstName, lastName, role }),
+    body: JSON.stringify({
+      username: username,
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      role: role,
+    }),
   }).then((response) => {
     if (response.status === 200) {
       const modal = document.getElementById("editUserModal");
@@ -119,13 +139,17 @@ function showDeleteUserModal(userId) {
 }
 
 function deleteUser(userId) {
-  fetch(`http://localhost:8080/api/users/${userId}`, {
-    method: "DELETE",
-  }).then((response) => {
-    if (response.status === 204) {
-      updateTable();
-    }
-  });
+  if (userId == getCookieValue("id")) {
+    alert("Вы не можете удалить себя!");
+  } else {
+    fetch(`http://localhost:8080/api/users/${userId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (response.status === 204) {
+        updateTable();
+      }
+    });
+  }
 }
 
 updateTable();

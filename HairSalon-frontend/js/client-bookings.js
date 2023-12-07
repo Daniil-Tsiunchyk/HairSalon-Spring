@@ -232,7 +232,7 @@ function declineBooking(BookingId, userId, serviceId, barberID, location, DateTi
 
 function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    return `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
+    return `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 }
 
 function checkBookingAvailability(barberId, dateTime) {

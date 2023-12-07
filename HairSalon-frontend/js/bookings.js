@@ -11,7 +11,7 @@ function updateBookingTable() {
                 filteredData.forEach((booking) => {
                     const row = document.createElement("tr");
                     let locationName;
-                    switch(booking.location){
+                    switch (booking.location) {
                         case 1: locationName = "Ваупшасова 29"; break;
                         case 2: locationName = "Партизанский пр. 8"; break;
                         case 3: locationName = "Смоленская 15А"; break;
@@ -178,7 +178,6 @@ function showEditBooking(BookingId) {
             document.getElementById("editUser").value = BookingData.userId;
             document.getElementById("editService").value = BookingData.serviceId;
             document.getElementById("editLocation").value = BookingData.location;
-            document.getElementById("editDateTime").value = BookingData.DateTime;
         });
 
     submitEditButton.onclick = function () {
@@ -240,7 +239,7 @@ function deleteBooking(BookingId) {
 
 function formatDateTime(dateTimeString) {
     const date = new Date(dateTimeString);
-    return `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}`;
+    return `${date.toLocaleDateString()}, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 }
 
 function checkBookingAvailability(barberId, dateTime) {

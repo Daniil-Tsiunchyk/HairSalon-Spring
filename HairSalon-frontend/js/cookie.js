@@ -8,6 +8,3 @@ function getCookieValue(cookieName) {
   }
   return null;
 }
-
-// const id = getCookieValue("id");
-// const role = getCookieValue("role");

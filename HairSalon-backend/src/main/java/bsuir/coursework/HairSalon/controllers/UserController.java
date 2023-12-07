@@ -63,6 +63,22 @@ public class UserController {
       .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
+  @Operation(summary = "Create a user")
+  @PostMapping
+  public ResponseEntity<User> createUser(
+    @RequestBody @Parameter(description = "User data for creation") User user
+  ) throws NoSuchAlgorithmException {
+    User existingUser = userService.findByUsername(user.getUsername());
+    if (existingUser != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    String hashedPassword = PasswordHasher.hashPassword(user.getPassword());
+    user.setPassword(hashedPassword);
+    User createdUser = userService.createUser(user);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+  }
+
   @Operation(
     summary = "Update user information",
     description = "Endpoint to update existing user information",
@@ -77,9 +93,7 @@ public class UserController {
   @PutMapping("/{id}")
   public ResponseEntity<User> updateUser(
     @PathVariable @Parameter(description = "ID of the user") int id,
-    @RequestBody @Parameter(
-      description = "Updated user data"
-    ) User updatedUser
+    @RequestBody @Parameter(description = "Updated user data") User updatedUser
   ) throws NoSuchAlgorithmException {
     User updated = userService.updateUser(id, updatedUser);
     if (updated != null) {
@@ -135,7 +149,7 @@ public class UserController {
 
     String hashedPassword = PasswordHasher.hashPassword(user.getPassword());
     user.setPassword(hashedPassword);
-
+    user.setRole(User.UserRole.USER);
     User createdUser = userService.createUser(user);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }

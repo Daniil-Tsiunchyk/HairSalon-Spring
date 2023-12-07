@@ -32,8 +32,11 @@ document
       body: JSON.stringify({ username, password }),
     }).then((response) => {
       if (response.status === 201) {
-        document.getElementById("registrationMessage").textContent =
-          "Регистрация успешна.";
+        response.json().then((data) => {
+          document.cookie = `id=${data.id}; path=/`;
+          document.cookie = `role=${data.role}; path=/`;
+          window.location.href = "client-bookings.html";
+        });
       } else {
         document.getElementById("registrationMessage").textContent =
           "Ошибка регистрации.";
